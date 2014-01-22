@@ -1,0 +1,21 @@
+<!--
+drydock.xsd - XML schema for starship definition
+
+Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/licenses/lgpl-2.1.html)
+
+This project lives at http://github.com/codefool/drydock
+
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://codefool.org/schemas/drydock/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://codefool.org/schemas/drydock/">
+    <xs:complexType name="ShipDefinition">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ShipDefinitionList">
+        <xs:sequence>
+            <xs:element name="ship" type="ShipDefinition" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
