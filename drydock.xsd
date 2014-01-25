@@ -18,4 +18,12 @@ This project lives at http://github.com/codefool/drydock
             <xs:element name="ship" type="ShipDefinition" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:complexType name="BaseSystem">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="size" type="xs:int"/>
+            <xs:element name="repairRate" type="xs:int"/>
+            <xs:element name="maxDamage" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
