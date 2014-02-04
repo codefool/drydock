@@ -1,3 +1,5 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ship version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd" xsi:schemaLocation="urn:drydock.xsd C:/Users/hesterg/github/drydock/drydock.xsd">
 <!--
 example.xml - Sample XML exercising entities defined in drydock.xsd.
 
@@ -6,9 +8,8 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-<ShipDefinitionList xmlns="urn:drydock.xsd" version="1.0">
-    <ship>
-        <name>Constituation Class</name>
-        <bogus>should fail</bogus>
-    </ship>
-</ShipDefinitionList>
+  <name>Constituation Class</name>
+  <components>
+    
+  </components>
+</ship>

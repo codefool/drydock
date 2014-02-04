@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--
 drydock.xsd - XML schema for starship definition
 
@@ -6,16 +7,196 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://codefool.org/schemas/drydock/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://codefool.org/schemas/drydock/">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="urn:drydock.xsd" 
+  xmlns:tns="urn:drydock.xsd"
+  elementFormDefault="qualified">
     <xs:complexType name="ShipDefinition">
         <xs:sequence>
             <xs:element name="name" type="xs:string"/>
+            <xs:element name="components" type="xs:unsignedLong" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="ShipDefinitionList">
+    <xs:simpleType name="ComponentClass">
+	    <xs:restriction base="xs:string">
+	       <xs:enumeration value=""/>
+	    </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="FlamableAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component is flamable.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="ship" type="ShipDefinition" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+            <xs:element name="rate" type="xs:int"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:complexType name="ExplosiveAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component is explosive.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+            <xs:element name="maxDamage" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ReparableAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component is reparable.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+            <xs:element name="rate" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PowerSourceAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component is a power source.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+            <xs:element name="rate" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PowerSinkAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component is a power sink.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+            <xs:element name="rate" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PersistantAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component is a persistant (cannot be destroyed).
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RegenerativeAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component is regenerative (can repair itself.)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+            <xs:element name="rate" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ConstructableAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component can be constructed.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+            <xs:element name="rate" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="InvulerableAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component cannot be damaged.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="ComponentAttribute">
+        <xs:choice>
+            <xs:element name="flamable" type="FlamableAttribute"/>
+            <xs:element name="explosive" type="ExposiveAttribute"/>
+            <xs:element name="reparable" type="ReparableAttribute"/>
+            <xs:element name="powersource" type="PowerSourceAttribute"/>
+            <xs:element name="powersink" type="PowerSinkAttribute"/>
+            <xs:element name="persistent" type="PersistantAttribute"/>
+            <xs:element name="regenerative" type="RegenerativeAttribute"/>
+            <xs:element name="constructable" type="ConstructableAttribute"/>
+            <xs:element name="invulnerable" type="InvulerableAttribute"/>
+        </xs:choice>
+    </xs:simpleType>
+    <xs:complexType name="System">
+        <xs:annotation>
+            <xs:documentation>
+                A system is a collection of components that together provide some function.
+                The part list contains of the ordinals of the components that make up the
+                system.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guids" type="xs:int" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Component">
+        <xs:annotation>
+	        <xs:documentation>
+	           guid               // unique identifier 
+			   order;             // priority order in damage assessment (0=highest)
+			   maxDamage;         // maximum damage this component can absorb
+			   damage;            // current amount of damage
+			   damageDisabled;    // amount of damage for this component to become disabled
+			   repairRate;        // rate at which damage can be repaired per turn
+			   volume;            // how much capacity this component occupies
+	        </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="guid" type="xs:unsignedLong"/>
+            <xs:element name="class" type="ComponentClass"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="order" type="xs:int"/>
+            <xs:element name="maxDamage" type="xs:int"/>
+            <xs:element name="disableDamage" type="xs:int"/>
+            <xs:element name="repairRate" type="xs:int"/>
+            <xs:element name="volume" type="xs:int"/>
+            <xs:element name="attributes" type="ComponentAttribute" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Shield">
+        <xs:annotation>
+            <xs:documentation>
+			    int _overload;      // overload amount
+			    int _max;           // maximum shield
+			    int _level;         // current shield level
+			    int _regen;         // regenerate amount per turn
+			    int _powerUp;       // amount of power to raise/sustain the shield
+			    int _powerReg;      // amount of power to regen a point of strength
+			    int _powerOver;     // amount of additional power to sustain an overloaded shield.
+			    bool _up;           // true if shield is currently active
+			    bool _overloaded;   // true if shield is being overloaded
+			    bool _regenerate;   // true if shield is regenerating
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="overload" type="xs:int"/>
+            <xs:element name="max" type="xs:int"/>
+            <xs:element name="level" type="xs:int"/>
+            <xs:element name="regen" type="xs:int"/>
+            <xs:element name="powerUp" type="xs:int"/>
+            <xs:element name="powerReg" type="xs:int"/>
+            <xs:element name="powerOver" type="xs:int"/>
+            <xs:element name="up" type="xs:boolean" default="false"/>
+            <xs:element name="overloaded" type="xs:boolean" default="false"/>
+            <xs:element name="regenerate" type="xs:boolean" default="false"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:element name="ship" type="ShipDefinition" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:element name="components" type="Component" minOccurs="0" maxOccurs="unbounded"/>
 </xs:schema>
