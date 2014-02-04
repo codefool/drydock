@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<drydock  xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd">
+﻿<drydock  xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd">
 <!--
 example.xml - Sample XML exercising entities defined in drydock.xsd.
 

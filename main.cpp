@@ -14,6 +14,7 @@ int main(int argc, char **argv)
     rapidxml::file<> myfile("example.xml");
     xml_document<> doc;  // character type defaults to char
     doc.parse<parse_full>(myfile.data());
-    std::cout << "Name of first node is: " << doc.first_node()->name() << std::endl;
+    std::cout << "Name of first node is: " << doc.first_node()->name()
+    		  << std::endl;
     return 0;
 }
