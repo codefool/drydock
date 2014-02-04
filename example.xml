@@ -24,17 +24,11 @@ This project lives at http://github.com/codefool/drydock
 		<disableDamage>25</disableDamage>
 		<repairRate>5</repairRate>
 		<volume>10</volume>
-	  <flamable>
-	      <guid>1</guid>
-	      <rate>5</rate>
-	  </flamable>
-      <explosive>
-          <guid>1</guid>
-          <maxDamage>5</maxDamage>
-      </explosive>
+	  <flamable rate="5"/>
+      <explosive maxDamage="5"/>
     </component>
     <component>
-        <guid>1</guid>
+        <guid>2</guid>
         <class>bogus</class>
         <name>some system</name>
         <order>0</order>
