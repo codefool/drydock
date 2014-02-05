@@ -7,9 +7,9 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-  targetNamespace="urn:drydock.xsd" 
-  xmlns:tns="urn:drydock.xsd"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://codefool.org/schemas/drydock.xsd" 
+  xmlns:tns="http://codefool.org/schemas/drydock.xsd"
   elementFormDefault="qualified">
     <xs:complexType name="ShipDefinition">
         <xs:sequence>
