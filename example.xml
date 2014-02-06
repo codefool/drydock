@@ -7,7 +7,7 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-<drydock xmlns="http://codefool.org/schemas/drydock.xsd" xmlns:tns="http://codefool.org/schemas/drydock.xsd">
+<drydock xmlns="uri:codefool.org/schemas/drydock" xmlns:tns="uri:codefool.org/schemas/drydock">
 	<ship>
 	  <guid>1</guid>
 	  <name>Constituation Class</name>

@@ -8,8 +8,8 @@ This project lives at http://github.com/codefool/drydock
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://codefool.org/schemas/drydock.xsd" 
-  xmlns:tns="http://codefool.org/schemas/drydock.xsd"
+  targetNamespace="http://codefool.org/schemas/drydock" 
+  xmlns:tns="http://codefool.org/schemas/drydock"
   elementFormDefault="qualified">
     <xs:complexType name="ShipDefinition">
         <xs:sequence>
