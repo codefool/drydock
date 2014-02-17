@@ -8,7 +8,15 @@
 #include <rapidxml.hpp>
 #include <rapidxml_utils.hpp>
 using namespace rapidxml;
-
+/*
+ *
+ * VAR x
+ * VAR y
+ * MOV x,y
+ * EQU x,y
+ * call ship.damage()
+ *
+ */
 int main(int argc, char **argv)
 {
     rapidxml::file<> myfile("example.xml");

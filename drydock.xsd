@@ -11,11 +11,46 @@ This project lives at http://github.com/codefool/drydock
   targetNamespace="urn:drydock.xsd" 
   xmlns:tns="urn:drydock.xsd"
   elementFormDefault="qualified">
+  <xs:complexType name="ConnectedSection">
+    <attribute name="id" type="xs:int"/>
+    <attribute name="facing" type="tns:Facing"/>
+  </xs:complexType>
+  <xs:complexType name="Section">
+    <xs:annotation>
+        <xs:documentation>
+            A section is a basic container of components.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="list" type="tns:Component" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="neighborlist" type="tns:ConnectedSection" minOccurs="0" maxOccurs="unbounded"/> 
+    </xs:sequence>
+    <xs:attribute name="facing" type="tns:Facing"/>
+    <xs:attribute name="capacity" type="xs:int"/>
+    <xs:attribute name="id" type="xs:int"/>
+  </xs:complexType>
+  <xs:complexType name="Hull">
+    <xs:annotation>
+        <xs:documentation>
+            A hull is a container of sections.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="sectionList" type="tns:Section" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:int"/>
+  </xs:complexType>
+  
     <xs:complexType name="ShipDefinition">
+        <xs:annotation>
+            <xs:documentation>
+                Defines a ship, which is one-or-more hulls and several systems.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="guid" type="xs:unsignedLong"/>
             <xs:element name="name" type="xs:string"/>
-            <xs:element name="sections" type="tns:Section" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="sections" type="tns:Hull" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="systems" type="tns:System" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
