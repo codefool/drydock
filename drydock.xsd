@@ -7,9 +7,9 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  targetNamespace="http://codefool.org/schemas/drydock" 
-  xmlns:tns="http://codefool.org/schemas/drydock"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  targetNamespace="urn:drydock.xsd" 
+  xmlns:tns="urn:drydock.xsd"
   elementFormDefault="qualified">
     <xs:complexType name="ShipDefinition">
         <xs:sequence>
@@ -58,10 +58,7 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component is flamable.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-            <xs:element name="rate" type="xs:int"/>
-        </xs:sequence>
+        <xs:attribute name="rate" type="xs:int"/>
     </xs:complexType>
     <xs:complexType name="ExplosiveAttribute">
         <xs:annotation>
@@ -69,10 +66,7 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component is explosive.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-            <xs:element name="maxDamage" type="xs:int"/>
-        </xs:sequence>
+        <xs:attribute name="maxDamage" type="xs:int"/>
     </xs:complexType>
     <xs:complexType name="ReparableAttribute">
         <xs:annotation>
@@ -80,10 +74,7 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component is reparable.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-            <xs:element name="rate" type="xs:int"/>
-        </xs:sequence>
+        <xs:attribute name="rate" type="xs:int"/>
     </xs:complexType>
     <xs:complexType name="PowerSourceAttribute">
         <xs:annotation>
@@ -91,10 +82,7 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component is a power source.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-            <xs:element name="rate" type="xs:int"/>
-        </xs:sequence>
+        <xs:attribute name="rate" type="xs:int"/>
     </xs:complexType>
     <xs:complexType name="PowerSinkAttribute">
         <xs:annotation>
@@ -102,10 +90,7 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component is a power sink.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-            <xs:element name="rate" type="xs:int"/>
-        </xs:sequence>
+        <xs:attribute name="rate" type="xs:int"/>
     </xs:complexType>
     <xs:complexType name="PersistantAttribute">
         <xs:annotation>
@@ -113,9 +98,6 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component is a persistant (cannot be destroyed).
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-        </xs:sequence>
     </xs:complexType>
     <xs:complexType name="RegenerativeAttribute">
         <xs:annotation>
@@ -123,10 +105,7 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component is regenerative (can repair itself.)
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-            <xs:element name="rate" type="xs:int"/>
-        </xs:sequence>
+        <xs:attribute name="rate" type="xs:int"/>
     </xs:complexType>
     <xs:complexType name="ConstructableAttribute">
         <xs:annotation>
@@ -134,10 +113,7 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component can be constructed.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-            <xs:element name="rate" type="xs:int"/>
-        </xs:sequence>
+        <xs:attribute name="cost" type="xs:int"/>
     </xs:complexType>
     <xs:complexType name="InvulerableAttribute">
         <xs:annotation>
@@ -145,9 +121,6 @@ This project lives at http://github.com/codefool/drydock
                 Indicates this component cannot be damaged.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="guid" type="xs:unsignedLong"/>
-        </xs:sequence>
     </xs:complexType>
     <xs:complexType name="System">
         <xs:annotation>
