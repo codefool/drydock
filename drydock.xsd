@@ -25,9 +25,9 @@ This project lives at http://github.com/codefool/drydock
         <xs:element name="list" type="tns:Component" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="neighborlist" type="tns:ConnectedSection" minOccurs="0" maxOccurs="unbounded"/> 
     </xs:sequence>
+    <xs:attribute name="id" type="xs:int"/>
     <xs:attribute name="facing" type="tns:Facing"/>
     <xs:attribute name="capacity" type="xs:int"/>
-    <xs:attribute name="id" type="xs:int"/>
   </xs:complexType>
   <xs:complexType name="Hull">
     <xs:annotation>
@@ -41,7 +41,7 @@ This project lives at http://github.com/codefool/drydock
     <xs:attribute name="id" type="xs:int"/>
   </xs:complexType>
   
-    <xs:complexType name="ShipDefinition">
+    <xs:complexType name="ShipClass">
         <xs:annotation>
             <xs:documentation>
                 Defines a ship, which is one-or-more hulls and several systems.
@@ -50,6 +50,7 @@ This project lives at http://github.com/codefool/drydock
         <xs:sequence>
             <xs:element name="guid" type="xs:unsignedLong"/>
             <xs:element name="name" type="xs:string"/>
+            <xs:element name="mnemonic" type="xs:string"/>
             <xs:element name="sections" type="tns:Hull" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="systems" type="tns:System" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -69,7 +70,7 @@ This project lives at http://github.com/codefool/drydock
             <xs:documentation>
                 guid - unique identifier
                 face - the exposed face
-                volume - the maximum capicty.
+                volume - the maximum capacity.
                 contents - the components contained by this section
                 links - guids of neighboring sections. 
             </xs:documentation>
