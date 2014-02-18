@@ -11,10 +11,80 @@ This project lives at http://github.com/codefool/drydock
 	  <guid>1</guid>
 	  <name>Constituation Class</name>
 	</ship>
-    <ship>
-      <guid>1</guid>
-      <name>Constituation Class</name>
-    </ship>
+    <shipCLass guid="1" name="Constitution Class" mnemonic="CCA">
+	    <hull name="primary" facing="FAB">
+	        <section id="1" name="forward" facing="A" capacity="200">
+	            <component type="PhaserI" order="0"/> 
+                <component type="PhaserI" order="0"/> 
+                <component type="PhaserII" order="1"/> 
+                <component type="PhaserII" order="1"/> 
+                <component type="PhaserIII" order="2"/> 
+                <component type="PhaserIII" order="2"/> 
+                <component type="PhaserIV" order="3"/> 
+                <component type="PhaserIV" order="3"/> 
+                <component type="PhaserV" order="4"/> 
+                <component type="CargoBay" order="5"/>
+	        </section>
+            <section id="2" name="starboard" facing="BC" capacity="200">
+                <component type="PhaserI" order="0"/> 
+                <component type="PhaserI" order="0"/> 
+                <component type="PhaserII" order="1"/> 
+                <component type="PhaserII" order="1"/> 
+                <component type="PhaserIII" order="2"/> 
+                <component type="PhaserIII" order="2"/> 
+                <component type="PhaserIV" order="3"/> 
+                <component type="PhaserIV" order="3"/> 
+                <component type="PhaserV" order="4"/> 
+            </section>
+            <section id="1" name="aft" facing="D" capacity="200">
+                <component type="PhaserI" order="0"/> 
+                <component type="PhaserI" order="0"/> 
+                <component type="PhaserII" order="1"/> 
+                <component type="PhaserII" order="1"/> 
+                <component type="PhaserIII" order="2"/> 
+                <component type="PhaserIII" order="2"/> 
+                <component type="PhaserIV" order="3"/> 
+                <component type="PhaserIV" order="3"/> 
+                <component type="PhaserV" order="4"/> 
+            </section>
+            <section id="1" name="port" facing="EF" capacity="200">
+                <component type="PhaserI" order="0"/> 
+                <component type="PhaserI" order="0"/> 
+                <component type="PhaserII" order="1"/> 
+                <component type="PhaserII" order="1"/> 
+                <component type="PhaserIII" order="2"/> 
+                <component type="PhaserIII" order="2"/> 
+                <component type="PhaserIV" order="3"/> 
+                <component type="PhaserIV" order="3"/> 
+                <component type="PhaserV" order="4"/> 
+            </section>
+	    </hull>
+	    <hull name="secondary" facing="CDE">
+	       <section id="2100" name="portNacelle" facing="DE" capacity="100">
+	           <component id="2101" type="WarpNacelle" order="0"/>
+	           <component id="2102" type="WarpStrut" order="1"/>
+	           <component id="2103" type="PlasmaConduit" order="2"/>
+	       </section>
+           <section id="2200" name="starboardNacelle" facing="CD" capacity="100">
+               <component id="2201" type="WarpNacelle" order="0"/>
+               <component id="2202" type="WarpStrut" order="1"/>
+               <component id="2301" type="PlasmaConduit" order="2"/>
+           </section>
+           <section id="2300" name="mainEngineering" facing="D" capacity="50">
+                <component id="2301" type="WarpCore" order="0"/>
+           </section>
+	    </hull>
+	    <!--  
+	    the following defines a system consisting of the two warp nacelles and the warp core.
+	    The efficacy of this system is the average of the efficacies of all the components in
+	    the system. 
+	    -->
+        <system id="8000" name="WarpDrive">
+            <componentRef id="2100" weight="40%"/>
+            <componentRef id="2200" weight="40%"/>
+            <componentREf id="2301" weight="30%"/>
+        </system>
+    </shipCLass>
     <component>
 		<guid>1</guid>
 		<class>bogus</class>
