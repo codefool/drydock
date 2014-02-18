@@ -1,4 +1,4 @@
-﻿<drydock  xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd">
+﻿<drydock xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd" version="1.0">
 <!--
 example.xml - Sample XML exercising entities defined in drydock.xsd.
 
@@ -7,11 +7,7 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-	<ship>
-	  <guid>1</guid>
-	  <name>Constituation Class</name>
-	</ship>
-    <shipCLass guid="1" name="Constitution Class" mnemonic="CCA">
+    <shipClass guid="1" name="Constitution Class" mnemonic="CCA">
 	    <hull name="primary" facing="FAB">
 	        <section id="1" name="forward" facing="A" capacity="200">
 	            <component type="PhaserI" order="0"/> 
@@ -80,31 +76,19 @@ This project lives at http://github.com/codefool/drydock
 	    the system. 
 	    -->
         <system id="8000" name="WarpDrive">
-            <componentRef id="2100" weight="40%"/>
-            <componentRef id="2200" weight="40%"/>
-            <componentREf id="2301" weight="30%"/>
+            <componentRef id="2100" weight="40"/>
+            <componentRef id="2200" weight="40"/>
+            <componentRef id="2301" weight="30"/>
         </system>
-    </shipCLass>
-    <component>
-		<guid>1</guid>
-		<class>bogus</class>
-		<name>some system</name>
-		<order>0</order>
-		<maxDamage>100</maxDamage>
-		<disableDamage>25</disableDamage>
-		<repairRate>5</repairRate>
-		<volume>10</volume>
+    </shipClass>
+    <componentType id="1" name="PhaserI" class="Weapon" size="10">
+        <damage disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
 	  <flamable rate="5"/>
       <explosive maxDamage="5"/>
-    </component>
-    <component>
-        <guid>2</guid>
-        <class>bogus</class>
-        <name>some system</name>
-        <order>0</order>
-        <maxDamage>100</maxDamage>
-        <disableDamage>25</disableDamage>
-        <repairRate>5</repairRate>
-        <volume>10</volume>
-    </component>
+    </componentType>
+    <componentType id="1" name="PhaserII" class="Weapon" size="10">
+        <damage disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
+      <flamable rate="5"/>
+      <explosive maxDamage="5"/>
+    </componentType>
 </drydock>
