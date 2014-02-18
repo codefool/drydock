@@ -10,6 +10,12 @@
 		<xs:attribute name="type" type="xs:string" />
 		<xs:attribute name="order" type="xs:int" />
 	</xs:complexType>
+	<xs:complexType name="WeaponRef">
+	   <xs:attribute name="id" type="xs:int"/>
+	   <xs:attribute name="type" type="xs:string"/>
+	   <xs:attribute name="order" type="xs:int"/>
+	   <xs:attribute name="firingArc" type="xs:string"/>
+	</xs:complexType>
 	<xs:complexType name="Section">
 		<xs:annotation>
 			<xs:documentation>
@@ -18,12 +24,14 @@
 				name - the unique name of this section
 				facing - the side to which the section presents
 				capacity - the maximum capicity this section can contain
-				componentList - the list of Components in this section
-				neighborList - the name of the sections connected to this one.
+				component - the list of Components in this section
+				weapon - the list of Weapons in this section
+				neighbor - the name of the sections connected to this one.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="component" type="tns:ComponentRef" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="weapon" type="tns:WeaponRef" minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="neighbor" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:int" />
