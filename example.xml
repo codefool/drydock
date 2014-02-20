@@ -7,11 +7,11 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-    <shipClass guid="1" name="Constitution Class" mnemonic="CCA">
-	    <hull id="1000" name="primary" facing="FAB">
-	        <section id="1100" name="forward" facing="A" capacity="200">
+    <ship guid="10000" name="Constitution Class" mnemonic="CCA" crew="430">
+	    <hull id="11000" name="primary" facing="FAB">
+	        <section id="11100" name="forward" facing="A" capacity="200">
                 <component type="CargoBay" order="5"/>
-	            <weapon id="1101" type="PhaserI" order="0" firingArc="F"/> 
+	            <weapon id="11101" type="PhaserI" order="0" firingArc="F"/> 
                 <weapon type="PhaserI" order="0" firingArc="F"/> 
                 <weapon type="PhaserII" order="1" firingArc="F"/> 
                 <weapon type="PhaserII" order="1" firingArc="F"/> 
@@ -64,7 +64,7 @@ This project lives at http://github.com/codefool/drydock
                 <component id="1403" type="aux-bridge" order="0"/>
             </section>
 	    </hull>
-	    <hull id="2000" name="secondary" facing="CDE">
+	    <hull id="12000" name="secondary" facing="CDE">
 	       <section id="2100" name="portNacelle" facing="DE" capacity="100">
 	           <component id="2101" type="WarpNacelle" order="0"/>
 	           <component id="2102" type="WarpStrut" order="1"/>
@@ -97,22 +97,14 @@ This project lives at http://github.com/codefool/drydock
             <componentRef id="8201" weight="30"/>
             <componentRef id="8202" weight="40"/>
         </system>
-    </shipClass>
-    <componentType guid="1" name="PhaserI" size="10">
-        <damagable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
-	  <flamable rate="5"/>
-      <explosive maxDamage="5"/>
-    </componentType>
-    <componentType guid="1" name="PhaserII" size="10">
-        <damagable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
-      <flamable rate="5"/>
-      <explosive maxDamage="5"/>
-    </componentType>
-    <directFireWeapon guid="1" name="PhaserI" mnemonic="P1" size="10" range="5" entropy="1">
-        <damagable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
+    </ship>
+    <directFireWeapon guid="1" name="PhaserI" mnemonic="P1" size="10" maxRange="5" entropy="1">
+        <damageable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
+        <charging cost="1" time="1"/>
     </directFireWeapon>
-    <directFireWeapon guid="2" name="YomotoGun" mnemonic="YOM" size="30" range="10" entropy="1">
-        <damagable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
+    <directFireWeapon guid="2" name="YomotoGun" mnemonic="YOM" size="30" maxRange="10" entropy="1">
+        <damageable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
+        <charging cost="5" time="5"/>
         <cone>A5MB5RMA5RFA5</cone>
     </directFireWeapon>
 </drydock>
