@@ -97,14 +97,36 @@ This project lives at http://github.com/codefool/drydock
             <componentRef id="8201" weight="30"/>
             <componentRef id="8202" weight="40"/>
         </system>
+        <system id="8020" name="WaveMotionGun">
+            <componentRef id="3201" weight="40"/>
+            <componentRef id="2201" weight="10"/>
+            <componentRef id="3201" weight="50"/>
+        </system>
+        <systemRef id="8040" sysName="Phaser I" c1="2202" c2="1023" c3="1400"/>
+        <systemRef id="8030" sysName="Wave-Motion Gun" c1="3201" c2="2201" c3="3201"/>
     </ship>
-    <directFireWeapon guid="1" name="PhaserI" mnemonic="P1" size="10" maxRange="5" entropy="1">
-        <damageable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
-        <charging cost="1" time="1"/>
-    </directFireWeapon>
-    <directFireWeapon guid="2" name="YomotoGun" mnemonic="YOM" size="30" maxRange="10" entropy="1">
-        <damageable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
-        <charging cost="5" time="5"/>
-        <cone>A5MB5RMA5RFA5</cone>
-    </directFireWeapon>
+    <component guid="10200" name="Fusion Reactor 1" mnemonic="FR1" size="2">
+        <powersource rate="10"/>
+    </component>
+    <component guid="10210" name="Phaser I" mnemonic="P1" size="10">
+        <vulnerable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
+        <weapon damage="5">
+            <charging cost="1" time="1"/>
+        </weapon>
+        <directfire maxRange="5" entropy="1"/>
+    </component>
+    <component guid="10220" name="Wave-Motion Gun" mnemonic="WMG" size="30" maxOccurs="1">
+        <vulnerable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
+        <weapon damage="5">
+            <charging cost="5" time="5"/>
+        </weapon>
+        <directfire maxRange="10" entropy="1">
+            <cone>A5MB5RMA5RFA5</cone>
+        </directfire>
+    </component>
+    <system id="108020" name="WaveMotionGun">
+	    <componentRef id="3201" weight="40"/>
+	    <componentRef id="2201" weight="10"/>
+	    <componentRef id="3201" weight="50"/>
+    </system>
 </drydock>
