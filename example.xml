@@ -7,79 +7,93 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-    <ship guid="10000" name="Constitution Class" mnemonic="CCA" crew="430">
-	    <hull id="11000" name="primary" facing="FAB">
-	        <section id="11100" name="forward" facing="A" capacity="200">
-                <component type="CargoBay" order="5"/>
-	            <weapon id="11101" type="PhaserI" order="0" firingArc="F"/> 
-                <weapon type="PhaserI" order="0" firingArc="F"/> 
-                <weapon type="PhaserII" order="1" firingArc="F"/> 
-                <weapon type="PhaserII" order="1" firingArc="F"/> 
-                <weapon type="PhaserIII" order="2" firingArc="F"/> 
-                <weapon type="PhaserIII" order="2" firingArc="F"/> 
-                <weapon type="PhaserIV" order="3" firingArc="F"/> 
-                <weapon type="PhaserIV" order="3" firingArc="F"/> 
-                <weapon type="PhaserV" order="4" firingArc="F"/>
-                <neighbors>1100,1300,1400</neighbors>
+    <ship guid="10000" name="Heavy Cruiser" race="FED" mnemonic="CA" crew="430">
+        <shield facing="A" strength="30" generator="2201"/>
+        <shield facing="B" strength="24" generator="2202"/>
+        <shield facing="C" strength="24" generator="2203"/>
+        <shield facing="D" strength="24" generator="2204"/>
+        <shield facing="E" strength="24" generator="2205"/>
+        <shield facing="F" strength="24" generator="2206"/>
+	    <hull id="1" name="primary" facing="FAB" hits="12">
+	        <section id="11" name="forward" facing="A" capacity="200">
+	           <component id="111" type="Battery"/>
+	           <component id="112" type="Battery"/>
+	           <weapon id="113" type="Photon" firingArc="FA"/>
+               <weapon id="114" type="Photon" firingArc="FA"/>
+               <weapon id="115" type="Photon" firingArc="FA"/>
+               <weapon id="116" type="Photon" firingArc="FA"/>
+	           <weapon id="117" type="PhaserI" firingArc="FH"/> 
+               <weapon id="118" type="PhaserI" firingArc="FH"/> 
+               <neighbors>11000,13000,14000</neighbors>
 	        </section>
-            <section id="1200" name="starboard" facing="BC" capacity="200">
-                <weapon type="PhaserI" order="0"/> 
-                <weapon type="PhaserI" order="0"/> 
-                <weapon type="PhaserII" order="1"/> 
-                <weapon type="PhaserII" order="1"/> 
-                <weapon type="PhaserIII" order="2"/> 
-                <weapon type="PhaserIII" order="2"/> 
-                <weapon type="PhaserIV" order="3"/> 
-                <weapon type="PhaserIV" order="3"/> 
-                <weapon type="PhaserV" order="4"/> 
+            <section id="12" name="starboard" facing="BC" capacity="200">
+                <component id="121" type="Lab"/>
+                <component id="122" type="Lab"/>
+                <component id="123" type="Lab"/>
+                <component id="124" type="Lab"/>
+                <weapon id="125" type="PhaserI" firingArc="RF"/> 
+                <weapon id="126" type="PhaserI" firingArc="R"/> 
                 <neighbors>1000,1200,1400</neighbors>
             </section>
-            <section id="1300" name="aft" facing="D" capacity="200">
-                <component type="PhaserI" order="0"/> 
-                <component type="PhaserI" order="0"/> 
-                <component type="PhaserII" order="1"/> 
-                <component type="PhaserII" order="1"/> 
-                <component type="PhaserIII" order="2"/> 
-                <component type="PhaserIII" order="2"/> 
-                <component type="PhaserIV" order="3"/> 
-                <component type="PhaserIV" order="3"/> 
-                <component type="PhaserV" order="4"/> 
+            <section id="13" name="aft" facing="D" capacity="200">
+                <component id="131" type="ASW"/>
+                <component id="132" type="Emergency"/>
+                <component id="133" type="Emergency"/>
+                <component id="134" type="Impulse"/>
+                <component id="135" type="Impulse"/>
+                <component id="136" type="Impulse"/>
+                <component id="137" type="Impulse"/>
+                <component id="138" type="Battery"/>
                 <neighbors>1100,1200,1400,2000</neighbors>
             </section>
-            <section id="1400" name="port" facing="EF" capacity="200">
-                <component type="PhaserI" order="0"/> 
-                <component type="PhaserI" order="0"/> 
-                <component type="PhaserII" order="1"/> 
-                <component type="PhaserII" order="1"/> 
-                <component type="PhaserIII" order="2"/> 
-                <component type="PhaserIII" order="2"/> 
-                <component type="PhaserIV" order="3"/> 
-                <component type="PhaserIV" order="3"/> 
-                <component type="PhaserV" order="4"/> 
+            <section id="14" name="port" facing="EF" capacity="200">
+                <component id="140" type="Lab"/>
+                <component id="141" type="Lab"/>
+                <component id="142" type="Lab"/>
+                <component id="143" type="Lab"/>
+                <weapon id="144" type="PhaserI" firingArc="LF"/> 
+                <weapon id="145" type="PhaserI" firingArc="L"/> 
                 <neighbors>1100,1200,1400,2000</neighbors>
             </section>
-            <section id="1500" name="core" facing="ABCDEF" capacity="200">
-                <component id="1401" type="sickbay" order="0"/>
-                <component id="1402" type="bridge" order="0"/>
-                <component id="1403" type="aux-bridge" order="0"/>
+            <section id="15" name="core" facing="ABCDEF" capacity="200">
+                <component id="150" type="sickbay"/>
+                <component id="151" type="bridge"/>
+                <component id="152" type="bridge"/>
             </section>
 	    </hull>
-	    <hull id="12000" name="secondary" facing="CDE">
-	       <section id="2100" name="portNacelle" facing="DE" capacity="100">
-	           <component id="2101" type="WarpNacelle" order="0"/>
-	           <component id="2102" type="WarpStrut" order="1"/>
-	           <component id="2103" type="PlasmaConduit" order="2"/>
+	    <hull id="2" name="secondary" facing="CDE" hits="4">
+	       <section id="21" name="portNacelle" facing="DE" capacity="100">
+	           <component id="211" type="WarpNacelle"/>
+	           <component id="212" type="WarpStrut"/>
+	           <component id="213" type="PlasmaConduit"/>
+               <component id="214" type="Battery"/>
+               <component id="215" type="AWR"/>
+               <component id="216" type="AWR"/>
+                <neighbors>23</neighbors>
 	       </section>
-           <section id="2200" name="starboardNacelle" facing="CD" capacity="100">
-               <component id="2201" type="WarpNacelle" order="0"/>
-               <component id="2202" type="WarpStrut" order="1"/>
-               <component id="2203" type="PlasmaConduit" order="2"/>
+           <section id="22" name="starboardNacelle" facing="CD" capacity="100">
+               <component id="221" type="WarpNacelle"/>
+               <component id="222" type="WarpStrut"/>
+               <component id="223" type="PlasmaConduit"/>
+               <component id="224" type="Battery"/>
+               <component id="225" type="AWR"/>
+               <component id="226" type="AWR"/>
+                <neighbors>23</neighbors>
            </section>
-           <section id="2300" name="mainEngineering" facing="D" capacity="50">
-                <component id="2301" type="WarpCore" order="0"/>
+           <section id="23" name="mainEngineering" facing="D" capacity="50">
+                <component id="231" type="WarpCore"/>
+                <weapon id="232" type="PhaserI" firingArc="360"/>
+                <weapon id="233" type="PhaserI" firingArc="360"/>
+                <weapon id="234" type="PhaserIII" firingArc="D"/>
+                <weapon id="235" type="PhaserIII" firingArc="D"/>
+                <neighbors>24,21,22</neighbors>
            </section>
-           <section id="2400" name="shuttleBay" facing="D" capacity="10">
-                <component id="2401" type="cargoBay" order="0"/>
+           <section id="24" name="shuttleBay" facing="D" capacity="10">
+                <component id="240" type="ShuttleCraft"/>                
+                <component id="241" type="ShuttleCraft"/>                
+                <component id="242" type="ShuttleCraft"/>                
+                <component id="243" type="ShuttleCraft"/>                
+                <neighbors>23</neighbors>
            </section>
 	    </hull>
 	    <!--  
@@ -120,13 +134,11 @@ This project lives at http://github.com/codefool/drydock
         <weapon damage="5">
             <charging cost="5" time="5"/>
         </weapon>
-        <directfire maxRange="10" entropy="1">
-            <cone>A5MB5RMA5RFA5</cone>
-        </directfire>
+        <directfire maxRange="10" entropy="1" cone="A5MB5RMA5RFA5"/>
     </component>
-    <system id="108020" name="WaveMotionGun">
-	    <componentRef id="3201" weight="40"/>
-	    <componentRef id="2201" weight="10"/>
-	    <componentRef id="3201" weight="50"/>
+    <system id="108020" name="WaveMotionGun" template="true">
+	    <componentRef id="$c1" type="Wave-Motion Gun" weight="40"/>
+	    <componentRef id="$c2" type="Fusion Reactor 1" weight="10"/>
+	    <componentRef id="$c3" type="10220" weight="50"/>
     </system>
 </drydock>

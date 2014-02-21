@@ -5,16 +5,104 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd"
 	elementFormDefault="qualified">
+	<!--
+	Enumerations and constants 
+	-->
+	<xs:simpleType name="ChargingSource">
+	   <xs:restriction base="xs:string">
+	       <xs:enumeration value="Warp"/>
+	       <xs:enumeration value="Reactor"/>
+	       <xs:enumeration value="Battery"/>
+	   </xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Race">
+	   <xs:restriction base="xs:string">
+	       <xs:enumeration value="FED"/>
+	       <xs:enumeration value="KLI"/>
+	   </xs:restriction>
+	</xs:simpleType>
+    <xs:simpleType name="Facing">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A" />
+            <xs:enumeration value="B" />
+            <xs:enumeration value="C" />
+            <xs:enumeration value="D" />
+            <xs:enumeration value="E" />
+            <xs:enumeration value="F" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FiringArc">
+       <xs:annotation>
+           <xs:documentation>
+           RF - Right Front
+           R  - Right
+           RR - Right Rear
+           LR - Left Rear
+           L  - Left
+           LF - Left Front
+           FA - Forward Arc (LF+RF)
+           RA - Rear Arc (LR+RR)
+           LS - Left Side (LF + L + LR)
+           FX - (L + LF + RF + R)
+           RX - (L + LR + RR + R)
+           RS - Right Side (RF + R + RR)
+           FH - Forward Half
+           RH - Rear Half
+           360 - Can fire in any direction
+           </xs:documentation>
+       </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="RF"/>
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="RR"/>
+            <xs:enumeration value="LR"/>
+            <xs:enumeration value="L"/>
+            <xs:enumeration value="LF"/>
+            <xs:enumeration value="FA"/>
+            <xs:enumeration value="RA"/>
+            <xs:enumeration value="LS"/>
+            <xs:enumeration value="FX"/>
+            <xs:enumeration value="RX"/>
+            <xs:enumeration value="RS"/>
+            <xs:enumeration value="FH"/>
+            <xs:enumeration value="RH"/>
+            <xs:enumeration value="360"/>
+            <xs:enumeration value="Custom"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!--
+    Reference types. 
+    -->
 	<xs:complexType name="ComponentRef">
-	    <xs:attribute name="id" type="xs:int"/>
+	   <xs:annotation>
+	       <xs:documentation>
+	       A reference to a previously declared component.
+	       id - the id of the component being referenced.
+	       type - the type of system required for this reference.
+	       weight - how much this efficacy of this component plays in the overall systems
+	                efficacy score. 0 indicates it has an average weight.
+	       backup - the id of a backup component of the same type to take the place of
+	                this component should it be disabled or destroyed.
+	       </xs:documentation>
+	   </xs:annotation>
+	    <xs:attribute name="id" type="xs:string" use="required"/>
 		<xs:attribute name="type" type="xs:string"/>
-		<xs:attribute name="order" type="xs:int"/>
+        <xs:attribute name="weight" type="xs:int" default="0"/>
+        <xs:attribute name="backup" type="xs:string"/>
 	</xs:complexType>
 	<xs:complexType name="WeaponRef">
-	   <xs:attribute name="id" type="xs:int"/>
-	   <xs:attribute name="type" type="xs:string"/>
-	   <xs:attribute name="order" type="xs:int"/>
-	   <xs:attribute name="firingArc" type="xs:string"/>
+       <xs:annotation>
+           <xs:documentation>
+           A reference to a previously declared weapon.
+           id - the id of the weapon being referenced.
+           ofType - (templates) the type of system required for this reference.
+           </xs:documentation>
+       </xs:annotation>
+       <xs:complexContent>
+	       <xs:extension base="tns:ComponentRef">
+	            <xs:attribute name="firingArc" type="xs:string"/>
+	       </xs:extension>
+	   </xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="SystemRef">
 	   <xs:attribute name="id" type="xs:int"/>
@@ -27,6 +115,9 @@
        <xs:attribute name="c5" type="xs:int"/>
        <xs:attribute name="c6" type="xs:int"/>
 	</xs:complexType>
+    <!--
+    Class definitions 
+    -->
 	<xs:complexType name="Section">
 		<xs:annotation>
 			<xs:documentation>
@@ -62,6 +153,7 @@
 		<xs:attribute name="id" type="xs:int" use="required"/>
 		<xs:attribute name="name" type="xs:string"/>
 		<xs:attribute name="facing" type="xs:string" use="required"/>
+		<xs:attribute name="hits" type="xs:int" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="ShipClass">
 		<xs:annotation>
@@ -70,6 +162,7 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+		    <xs:element name="shield" type="tns:Shield" minOccurs="6" maxOccurs="6"/>
 			<xs:element name="hull" type="tns:HullClass" minOccurs="1" maxOccurs="unbounded"/>
 			<xs:element name="system" type="tns:SystemClass" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="systemRef" type="tns:SystemRef" minOccurs="0" maxOccurs="unbounded"/>
@@ -78,34 +171,8 @@
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="mnemonic" type="xs:string" use="required"/>
 		<xs:attribute name="crew" type="xs:int" use="required"/>
+		<xs:attribute name="race" type="tns:Race" use="required"/>
 	</xs:complexType>
-	<xs:simpleType name="Facing">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="A" />
-			<xs:enumeration value="B" />
-			<xs:enumeration value="C" />
-			<xs:enumeration value="D" />
-			<xs:enumeration value="E" />
-			<xs:enumeration value="F" />
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="FiringArc">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Front"/>
-			<xs:enumeration value="Right-Front"/>
-			<xs:enumeration value="Right"/>
-			<xs:enumeration value="Rright-Rear"/>
-			<xs:enumeration value="Rear"/>
-			<xs:enumeration value="Left-Rear"/>
-			<xs:enumeration value="Left"/>
-			<xs:enumeration value="Left-Front"/>
-			<xs:enumeration value="Front-Half"/>
-			<xs:enumeration value="Right-Half"/>
-			<xs:enumeration value="Rear-Half"/>
-			<xs:enumeration value="Left-Half"/>
-			<xs:enumeration value="Custom"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:complexType name="WeaponAttribute">
 	   <xs:sequence>
         <xs:element name="charging" type="tns:ChargingSpec"/>
@@ -114,30 +181,31 @@
        <xs:attribute name="duration" type="xs:int" default="1"/>
 	</xs:complexType>
 	<xs:complexType name="DirectFireAttribute">
-       <xs:sequence>
-           <xs:element name="cone" type="xs:string" minOccurs="0" maxOccurs="1"/>
-       </xs:sequence>
        <xs:attribute name="minRange" type="xs:int" default="1"/>
        <xs:attribute name="maxRange" type="xs:int"/>
        <xs:attribute name="entropy" type="xs:int" default="1"/>
+       <xs:attribute name="chargingSource" type="xs:string" default="*"/>
+       <xs:attribute name="cone" type="xs:string"/>
 	</xs:complexType>
 	<xs:complexType name="SeekingWeaponAttribute">
-        <xs:attribute name="range" type="xs:int"/>
+        <xs:attribute name="maxAge" type="xs:int"/>
         <xs:attribute name="initSpeed" type="xs:int"/>
         <xs:attribute name="maxSpeed" type="xs:int"/>
-        <xs:attribute name="accelleration" type="xs:int"/>
-        <xs:attribute name="turningClass" type="xs:int"/>
+        <xs:attribute name="accel" type="xs:int"/>
+        <xs:attribute name="turning" type="xs:int"/>
+        <xs:attribute name="armTime" type="xs:int" default="1"/>
+        <xs:attribute name="reloadTime" type="xs:int" default="1"/>
 	</xs:complexType>
     <xs:complexType name="ComponentClass">
         <xs:annotation>
             <xs:documentation>
-                Defines a type of component.
-                raceRestriction - CSV list of races this component can appear in. Preceed race
-                                  guid/name/mnemonic by dash '-' to exclude a specific race.
-                shipRestriction - CSV list of ships this component can appear in. Preceed ship 
-                                  guid/name/mnemonic by dash '-' to exclude a specific ship.
-                maxOccurs - indicates the maximum number of the component that can appear in a 
-                            ship. -1 means unlimited.
+            Defines a type of component.
+            raceRestriction - CSV list of races this component can appear in. Preceed race
+                              guid/name/mnemonic by dash '-' to exclude a specific race.
+            shipRestriction - CSV list of ships this component can appear in. Preceed ship 
+                              guid/name/mnemonic by dash '-' to exclude a specific ship.
+            maxOccurs - indicates the maximum number of the component that can appear in a 
+                        ship. -1 means unlimited.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -155,8 +223,8 @@
             <xs:element name="weapon" type="tns:WeaponAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="directfire" type="tns:DirectFireAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="seeking" type="tns:SeekingWeaponAttribute" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="raceRestriction" type="xs:string" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="shipRestriction" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="raceRestrict" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="shipRestrict" type="xs:string" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute name="guid" type="xs:unsignedLong" use="required"/>
         <xs:attribute name="name" type="xs:string" use="required"/>
@@ -362,11 +430,11 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="componentRef" type="tns:SystemComponentClass"
-				minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="componentRef" type="tns:ComponentRef" minOccurs="1" maxOccurs="unbounded" />
 		</xs:sequence>
-		<xs:attribute name="id" type="xs:int" />
-		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="id" type="xs:int" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="template" type="xs:boolean" default="false"/>
 	</xs:complexType>
 	<xs:complexType name="DamageSpec">
 		<xs:annotation>
@@ -387,6 +455,7 @@
 		<xs:sequence>
 			<xs:element name="component" type="tns:ComponentClass" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
+		<xs:attribute name="capacity" type="xs:int" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="CargoBayClass">
         <xs:annotation>
@@ -414,32 +483,23 @@
 	<xs:complexType name="Shield">
 		<xs:annotation>
 			<xs:documentation>
-				int _overload; // overload amount
-				int _max; // maximum shield
-				int _level; // current shield level
-				int _regen; // regenerate amount per turn
-				int _powerUp; // amount of power to raise/sustain the shield
-				int _powerReg; // amount of power to regen a point of strength
-				int _powerOver; // amount of additional power to sustain an overloaded shield.
-				bool _up; // true if shield is currently active
-				bool _overloaded; // true if shield is being overloaded
-				bool _regenerate; // true if shield is regenerating
+			   The shield force field. Each ship has six shields, each protecting a different
+			   face. Each shield 
+			    facing    - the facing this shield protects
+			    strength  - the amount of shield strength
+			    generator - the id/name of the shield generator for this shield.
+			    regen     - the amount of strength that can be regenned per impulse (-1 cannot regen)
+			    overload  - the overloaded amount of strength (-1 cannot be overloaded)
+			    overCost  - the amount of additional energy required per overload point of strength
 			</xs:documentation>
 		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="overload" type="xs:int" />
-			<xs:element name="max" type="xs:int" />
-			<xs:element name="level" type="xs:int" />
-			<xs:element name="regen" type="xs:int" />
-			<xs:element name="powerUp" type="xs:int" />
-			<xs:element name="powerReg" type="xs:int" />
-			<xs:element name="powerOver" type="xs:int" />
-			<xs:element name="up" type="xs:boolean" default="false" />
-			<xs:element name="overloaded" type="xs:boolean" default="false" />
-			<xs:element name="regenerate" type="xs:boolean" default="false" />
-		</xs:sequence>
+		<xs:attribute name="facing" type="tns:Facing" use="required"/>
+		<xs:attribute name="strength" type="xs:int" use="required"/>
+        <xs:attribute name="generator" type="xs:string" use="required"/>
+		<xs:attribute name="regen" type="xs:int" default="-1"/>
+		<xs:attribute name="overload" type="xs:int" default="-1"/>
+		<xs:attribute name="overCost" type="xs:int"/>
 	</xs:complexType>
-
 	<xs:complexType name="DryDock">
 		<xs:sequence>
 			<xs:element name="ship" type="tns:ShipClass" minOccurs="0" maxOccurs="unbounded"/>
