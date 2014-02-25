@@ -77,8 +77,8 @@
 	   <xs:annotation>
 	       <xs:documentation>
 	       A reference to a previously declared component.
-	       id - the id of the component being referenced.
-	       type - the type of system required for this reference.
+	       id - the instance id of the component being referenced.
+	       type - the class of system required for this reference.
 	       weight - how much this efficacy of this component plays in the overall systems
 	                efficacy score. 0 indicates it has an average weight.
 	       backup - the id of a backup component of the same type to take the place of
@@ -89,6 +89,7 @@
 		<xs:attribute name="type" type="xs:string"/>
         <xs:attribute name="weight" type="xs:int" default="0"/>
         <xs:attribute name="backup" type="xs:string"/>
+        <xs:attribute name="hits" type="xs:int" default="1"/>
 	</xs:complexType>
 	<xs:complexType name="WeaponRef">
        <xs:annotation>
@@ -132,8 +133,8 @@
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="component" type="tns:ComponentRef" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="weapon" type="tns:WeaponRef" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element name="componentRef" type="tns:ComponentRef" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="weaponRef" type="tns:WeaponRef" minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="neighbors" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:int" use="required"/>
@@ -241,13 +242,13 @@
            hold - the amount of power required to hold the charged weapon
            maxHold - the maximum number of impulses the charged weapon may be held
            overCost - the amount of (additional) power required to 
-                          overload the weapon
+                          overload the component
            overTime - the amount of (additional) time required to 
-                          overload the weapon
+                          overload the component
            overHoldCost - the amount of (additional) power required to 
-                              hold the overloaded weapon, once charged
+                              hold the overloaded component, once charged
            overMaxHold - the maximum number of impulses the overloaded
-                             weapon may be held once charged.
+                             component may be held once charged.
            </xs:documentation>
        </xs:annotation>
         <xs:attribute name="cost" type="xs:int" use="required"/>
@@ -263,6 +264,9 @@
 	   <xs:annotation>
 	       <xs:documentation>
 	       The base class for energy weapons.
+	       charging - specifies the charging metrics for the weapon
+	       minDamage - the minimum damage 
+	       maxDamage - the maximum damage 
 	       </xs:documentation>
 	   </xs:annotation>
 	   <xs:complexContent>
@@ -270,7 +274,8 @@
 	           <xs:sequence>
 	               <xs:element name="charging" type="tns:ChargingSpec"/>
 	           </xs:sequence>
-               <xs:attribute name="damage" type="xs:int"/>
+               <xs:attribute name="minDamage" type="xs:int" use="required"/>
+               <xs:attribute name="maxDamage" type="xs:int" use="required"/>
                <xs:attribute name="duration" type="xs:int" default="1"/>
 	       </xs:extension>
 	   </xs:complexContent>
@@ -290,12 +295,10 @@
 	   </xs:annotation>
 	   <xs:complexContent>
 	       <xs:extension base="tns:EnergyWeaponClass">
-	           <xs:sequence>
-	               <xs:element name="cone" type="xs:string" minOccurs="0" maxOccurs="1"/>
-	           </xs:sequence>
 	           <xs:attribute name="minRange" type="xs:int" default="1"/>
                <xs:attribute name="maxRange" type="xs:int"/>
 	           <xs:attribute name="entropy" type="xs:int" default="1"/>
+	           <xs:attribute name="cone" type="xs:string"/>
 	       </xs:extension>
 	   </xs:complexContent>
 	</xs:complexType>
@@ -316,6 +319,19 @@
            </xs:extension>
        </xs:complexContent>
 	</xs:complexType>
+    <xs:complexType name="LauncherClass">
+       <xs:annotation>
+           <xs:documentation>
+           Defines a seeking-weapon launcher, which spawns a seeking weapon.
+           </xs:documentation>
+       </xs:annotation>
+       <xs:complexContent>
+           <xs:extension base="tns:ComponentClass">
+                <xs:attribute name="spawnType" type="xs:string" use="required"/>
+                <xs:attribute name="capacity" type="xs:int" use="required"/>
+           </xs:extension>
+       </xs:complexContent>
+    </xs:complexType>
 	<xs:complexType name="FlamableAttribute">
 		<xs:annotation>
 			<xs:documentation>
