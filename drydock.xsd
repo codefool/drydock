@@ -116,6 +116,10 @@
        <xs:attribute name="c5" type="xs:int"/>
        <xs:attribute name="c6" type="xs:int"/>
 	</xs:complexType>
+    <xs:complexType name="RawMaterialRef">
+       <xs:attribute name="id" type="xs:string"/>
+       <xs:attribute name="qty" type="xs:int"/>
+    </xs:complexType>
     <!--
     Class definitions 
     -->
@@ -226,6 +230,7 @@
             <xs:element name="seeking" type="tns:SeekingWeaponAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="raceRestrict" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="shipRestrict" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="launcher" type="tns:LauncherAttribute" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="guid" type="xs:unsignedLong" use="required"/>
         <xs:attribute name="name" type="xs:string" use="required"/>
@@ -259,6 +264,17 @@
         <xs:attribute name="overTime" type="xs:int" default="0"/>
         <xs:attribute name="overHold" type="xs:int" default="0"/>
         <xs:attribute name="overMaxHold" type="xs:int" default="0"/>
+    </xs:complexType>
+    <xs:complexType name="RawMaterialClass">
+       <xs:annotation>
+           <xs:documentation>
+           Specifies a raw material used in building units
+           </xs:documentation>
+       </xs:annotation>
+       <xs:attribute name="id" type="xs:int" use="required"/>
+       <xs:attribute name="name" type="xs:int" use="required"/>
+       <xs:attribute name="cost" type="xs:int" default="1"/>
+       <xs:attribute name="radioactive" type="xs:boolean" default="false"/>
     </xs:complexType>
 	<xs:complexType name="EnergyWeaponClass">
 	   <xs:annotation>
@@ -319,19 +335,6 @@
            </xs:extension>
        </xs:complexContent>
 	</xs:complexType>
-    <xs:complexType name="LauncherClass">
-       <xs:annotation>
-           <xs:documentation>
-           Defines a seeking-weapon launcher, which spawns a seeking weapon.
-           </xs:documentation>
-       </xs:annotation>
-       <xs:complexContent>
-           <xs:extension base="tns:ComponentClass">
-                <xs:attribute name="spawnType" type="xs:string" use="required"/>
-                <xs:attribute name="capacity" type="xs:int" use="required"/>
-           </xs:extension>
-       </xs:complexContent>
-    </xs:complexType>
 	<xs:complexType name="FlamableAttribute">
 		<xs:annotation>
 			<xs:documentation>
@@ -400,8 +403,14 @@
 		<xs:annotation>
 			<xs:documentation>
 				Indicates this component can be built.
+				cost - the amount of power required to build the item
+				time - the number of impulses to build the item
+				rawMaterialRef - the id/string/mnemonic of a raw material type required to build the item.
 			</xs:documentation>
 		</xs:annotation>
+		<xs:sequence>
+		      <xs:element name="rawMaterialRef" type="tns:RawMaterialRef" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
 		<xs:attribute name="cost" type="xs:int" use="required"/>
         <xs:attribute name="time" type="xs:int" use="required"/>
 	</xs:complexType>
@@ -421,16 +430,25 @@
         <xs:attribute name="minCrew" type="xs:int" use="required"/>
         <xs:attribute name="maxCrew" type="xs:int" use="required"/>
     </xs:complexType>
+    <xs:complexType name="LauncherAttribute">
+        <xs:annotation>
+            <xs:documentation>
+                Indicates this component can spawn other chit types
+                spawnType - the class of chit to be spawned
+                seriesNo - Base id number for the spawn chits. The id number of the
+                           first chit will be seriesNo + 1, the second seriesNo +2, 
+                           etc. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="spawnType" type="xs:string" use="required"/>
+        <xs:attribute name="seriesNo" type="xs:int" use="required"/>
+        <xs:attribute name="capacity" type="xs:int" default="1"/>
+        <xs:attribute name="factory" type="xs:boolean" default="false"/>
+    </xs:complexType>
 	<xs:complexType name="SystemComponentClass">
 		<xs:annotation>
 			<xs:documentation>
-				A component that is part of a ship's system. The id is the id of the
-				component to include in the system, and the weight is the (optional) 
-				percentage weight that this component's efficacy plays in the overall
-				efficacy rating for the system. A weight of -1 means that the actual 
-				weight is calculated after all specified weights of other components 
-				have been accounted for. An overall system weight > 100% results in 
-				an error.
+				A component that is part of a section.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:attribute name="id" type="xs:integer" />
