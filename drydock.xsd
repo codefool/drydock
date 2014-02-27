@@ -19,6 +19,7 @@
 	   <xs:restriction base="xs:string">
 	       <xs:enumeration value="FED"/>
 	       <xs:enumeration value="KLI"/>
+           <xs:enumeration value="KAZ"/>
 	   </xs:restriction>
 	</xs:simpleType>
     <xs:simpleType name="Facing">
@@ -164,6 +165,16 @@
 		<xs:annotation>
 			<xs:documentation>
 				Defines a ship class, which is one-or-more hulls and several systems.
+				shield - six must exist, one for each facing.
+				hull - at least one
+				system - list of system specifications unique to this ship class.
+				systemRef - list of system ref's for systems that exist in this ship class.
+				buildable - for buildable ships, information on what requires to build.
+                guid - GUID for this ship class.
+                name - display name
+                mnemonic - three-or-more character abbreviation to represent this ship class.
+                crew - the total number of crew allotment
+                race - the race this ship class originates from.				
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
@@ -171,6 +182,7 @@
 			<xs:element name="hull" type="tns:HullClass" minOccurs="1" maxOccurs="unbounded"/>
 			<xs:element name="system" type="tns:SystemClass" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="systemRef" type="tns:SystemRef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="buildable" type="tns:BuildableAttribute" minOccurs="0" maxOccurs="1"/>
 		</xs:sequence>
 		<xs:attribute name="guid" type="xs:unsignedLong" use="required"/>
 		<xs:attribute name="name" type="xs:string" use="required"/>
@@ -179,10 +191,8 @@
 		<xs:attribute name="race" type="tns:Race" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="WeaponAttribute">
-	   <xs:sequence>
-        <xs:element name="charging" type="tns:ChargingSpec"/>
-	   </xs:sequence>
-       <xs:attribute name="damage" type="xs:int" use="required"/>
+       <xs:attribute name="baseDamage" type="xs:int" use="required"/>
+       <xs:attribute name="addDamage" type="xs:int" default="0"/>
        <xs:attribute name="duration" type="xs:int" default="1"/>
 	</xs:complexType>
 	<xs:complexType name="DirectFireAttribute">
@@ -214,6 +224,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="chargable" type="tns:ChargingAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="vulnerable" type="tns:DamageSpec" minOccurs="0" maxOccurs="1"/>
             <xs:element name="flamable" type="tns:FlamableAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="explosive" type="tns:ExplosiveAttribute" minOccurs="0" maxOccurs="1"/>
@@ -238,60 +249,36 @@
         <xs:attribute name="size" type="xs:int" use="required"/>
         <xs:attribute name="maxOccurs" type="xs:int" default="-1"/>
     </xs:complexType>
-    <xs:complexType name="ChargingSpec">
-       <xs:annotation>
-           <xs:documentation>
-           Specifies charging metrics for a component.
-           cost - the amount of power required to charge the weapon
-           time - the number of impulses required to charge the weapon
-           hold - the amount of power required to hold the charged weapon
-           maxHold - the maximum number of impulses the charged weapon may be held
-           overCost - the amount of (additional) power required to 
-                          overload the component
-           overTime - the amount of (additional) time required to 
-                          overload the component
-           overHoldCost - the amount of (additional) power required to 
-                              hold the overloaded component, once charged
-           overMaxHold - the maximum number of impulses the overloaded
-                             component may be held once charged.
-           </xs:documentation>
-       </xs:annotation>
-        <xs:attribute name="cost" type="xs:int" use="required"/>
-        <xs:attribute name="time" type="xs:int" use="required"/>
-        <xs:attribute name="hold" type="xs:int" default="0"/>
-        <xs:attribute name="maxHold" type="xs:int" default="0"/>
-        <xs:attribute name="overCost" type="xs:int" default="0"/>
-        <xs:attribute name="overTime" type="xs:int" default="0"/>
-        <xs:attribute name="overHold" type="xs:int" default="0"/>
-        <xs:attribute name="overMaxHold" type="xs:int" default="0"/>
-    </xs:complexType>
     <xs:complexType name="RawMaterialClass">
        <xs:annotation>
            <xs:documentation>
            Specifies a raw material used in building units
            </xs:documentation>
        </xs:annotation>
+       <xs:sequence>
+            <xs:element name="flamable" type="tns:FlamableAttribute" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="explosive" type="tns:ExplosiveAttribute" minOccurs="0" maxOccurs="1"/>
+       </xs:sequence>
        <xs:attribute name="id" type="xs:int" use="required"/>
        <xs:attribute name="name" type="xs:int" use="required"/>
+       <xs:attribute name="mnemonic" type="xs:string" use="required"/>
        <xs:attribute name="cost" type="xs:int" default="1"/>
-       <xs:attribute name="radioactive" type="xs:boolean" default="false"/>
+       <xs:attribute name="size" type="xs:int" default="1"/>
     </xs:complexType>
 	<xs:complexType name="EnergyWeaponClass">
 	   <xs:annotation>
 	       <xs:documentation>
 	       The base class for energy weapons.
 	       charging - specifies the charging metrics for the weapon
-	       minDamage - the minimum damage 
-	       maxDamage - the maximum damage 
+	       baseDamage - base damage - the minimum damage inflicted 
+	       addDamage - number of additional (0..n) damage inflicted. 
+	       duration - the number of impulses the weapon fires.
 	       </xs:documentation>
 	   </xs:annotation>
 	   <xs:complexContent>
 	       <xs:extension base="tns:ComponentClass">
-	           <xs:sequence>
-	               <xs:element name="charging" type="tns:ChargingSpec"/>
-	           </xs:sequence>
-               <xs:attribute name="minDamage" type="xs:int" use="required"/>
-               <xs:attribute name="maxDamage" type="xs:int" use="required"/>
+               <xs:attribute name="baseDamage" type="xs:int" use="required"/>
+               <xs:attribute name="addDamage" type="xs:int" default="0"/>
                <xs:attribute name="duration" type="xs:int" default="1"/>
 	       </xs:extension>
 	   </xs:complexContent>
@@ -307,12 +294,13 @@
 	       maxRange - the maximum effective range of the weapon.
 	       entropy - the amount of energy lost per unit distance (constant or percentage).
 	                 Specify constant as number &gt;= 1.0, and percentages as &lt; 1.0, e.g. .45
+	       cone - cone of affect - this is a HexWalker directive string.
 	       </xs:documentation>
 	   </xs:annotation>
 	   <xs:complexContent>
 	       <xs:extension base="tns:EnergyWeaponClass">
 	           <xs:attribute name="minRange" type="xs:int" default="1"/>
-               <xs:attribute name="maxRange" type="xs:int"/>
+               <xs:attribute name="maxRange" type="xs:int" use="required"/>
 	           <xs:attribute name="entropy" type="xs:int" default="1"/>
 	           <xs:attribute name="cone" type="xs:string"/>
 	       </xs:extension>
@@ -340,11 +328,17 @@
 			<xs:documentation>
 				Indicates this component is flamable.
 				damage - the number of points damage the burning inflicts on the component per turn
-				explosive - the percentage chance (cumulative) per turn that the component will explode. 
+				duration - the number of turns the component with burn
+				detonate - the percentage chance per turn that the component will explode. This is only useful
+				           if a ExplosiveAttribute is also specified. Otherwise nothing much happens.
+				cumulate - if the percentage change is cumulative 
 			</xs:documentation>
 		</xs:annotation>
-		<xs:attribute name="damage" type="xs:int" use="required"/>
-		<xs:attribute name="explosive" type="xs:int"/>
+		<xs:attribute name="baseDamage" type="xs:int" use="required"/>
+        <xs:attribute name="addDamage" type="xs:int" default="0"/>
+        <xs:attribute name="duration" type="xs:int" default="1"/>
+		<xs:attribute name="detonate" type="xs:int" default="0"/>
+		<xs:attribute name="cumulative" type="xs:boolean" default="false"/>
 	</xs:complexType>
 	<xs:complexType name="ExplosionDamage">
 	   <xs:sequence>
@@ -358,7 +352,8 @@
 				Indicates this component is explosive.
 			</xs:documentation>
 		</xs:annotation>
-		<xs:attribute name="maxDamage" type="xs:int" />
+        <xs:attribute name="baseDamage" type="xs:int" use="required"/>
+		<xs:attribute name="addDamage" type="xs:int" default="0"/>
 	</xs:complexType>
 	<xs:complexType name="ReparableAttribute">
 		<xs:annotation>
@@ -444,6 +439,33 @@
         <xs:attribute name="seriesNo" type="xs:int" use="required"/>
         <xs:attribute name="capacity" type="xs:int" default="1"/>
         <xs:attribute name="factory" type="xs:boolean" default="false"/>
+    </xs:complexType>
+    <xs:complexType name="ChargingAttribute">
+       <xs:annotation>
+           <xs:documentation>
+           Specifies charging metrics for a component.
+           cost - the amount of power required to charge the weapon
+           time - the number of impulses required to charge the weapon
+           hold - the amount of power required to hold the charged weapon
+           maxHold - the maximum number of impulses the charged weapon may be held
+           overCost - the amount of (additional) power required to 
+                          overload the component
+           overTime - the amount of (additional) time required to 
+                          overload the component
+           overHoldCost - the amount of (additional) power required to 
+                              hold the overloaded component, once charged
+           overMaxHold - the maximum number of impulses the overloaded
+                             component may be held once charged.
+           </xs:documentation>
+       </xs:annotation>
+        <xs:attribute name="cost" type="xs:int" use="required"/>
+        <xs:attribute name="time" type="xs:int" use="required"/>
+        <xs:attribute name="hold" type="xs:int" default="0"/>
+        <xs:attribute name="maxHold" type="xs:int" default="0"/>
+        <xs:attribute name="overCost" type="xs:int" default="0"/>
+        <xs:attribute name="overTime" type="xs:int" default="0"/>
+        <xs:attribute name="overHold" type="xs:int" default="0"/>
+        <xs:attribute name="overMaxHold" type="xs:int" default="0"/>
     </xs:complexType>
 	<xs:complexType name="SystemComponentClass">
 		<xs:annotation>
@@ -538,9 +560,9 @@
 		<xs:sequence>
 			<xs:element name="ship" type="tns:ShipClass" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="component" type="tns:ComponentClass" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="system" type="tns:SystemClass" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="directFireWeapon" type="tns:DirectFireWeaponClass" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="seekingWeapon" type="tns:SeekingWeaponClass" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="system" type="tns:SystemClass" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="version" type="xs:string" />
 	</xs:complexType>

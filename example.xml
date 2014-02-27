@@ -123,9 +123,12 @@ This project lives at http://github.com/codefool/drydock
         </weapon>
         <directfire maxRange="10" entropy="1" cone="A5MB5RMA5RFA5"/>
     </component>
-    <system id="108020" name="WaveMotionGun" template="true">
+    <component id="108020" name="WaveMotionGun" template="true">
 	    <componentRef id="$c1" type="Wave-Motion Gun" weight="40"/>
 	    <componentRef id="$c2" type="Fusion Reactor 1" weight="10"/>
 	    <componentRef id="$c3" type="10220" weight="50"/>
-    </system>
+    </component>
+    <component guid="1" name="Phaser I" mnemonic="PH-1" size="1" baseDamage="3" addDamage="3" maxRange="10">
+    
+    </component>
 </drydock>
