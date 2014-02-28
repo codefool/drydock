@@ -225,7 +225,7 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="chargable" type="tns:ChargingAttribute" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="vulnerable" type="tns:DamageSpec" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="vulnerable" type="tns:VulnerableAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="flamable" type="tns:FlamableAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="explosive" type="tns:ExplosiveAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="reparable" type="tns:ReparableAttribute" minOccurs="0" maxOccurs="1"/>
@@ -234,7 +234,7 @@
             <xs:element name="persistent" type="tns:PersistantAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="regenerative" type="tns:RegenerativeAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="buildable" type="tns:BuildableAttribute" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="invulnerable" type="tns:InvulerableAttribute" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="invulnerable" type="tns:InvulnerableAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="manned" type="tns:MannedAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="weapon" type="tns:WeaponAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="directfire" type="tns:DirectFireAttribute" minOccurs="0" maxOccurs="1"/>
@@ -409,12 +409,13 @@
 		<xs:attribute name="cost" type="xs:int" use="required"/>
         <xs:attribute name="time" type="xs:int" use="required"/>
 	</xs:complexType>
-	<xs:complexType name="InvulerableAttribute">
+	<xs:complexType name="InvulnerableAttribute">
 		<xs:annotation>
 			<xs:documentation>
 				Indicates this component cannot be damaged.
 			</xs:documentation>
 		</xs:annotation>
+        <xs:attribute name="conflictsWith" type="xs:string" default="VulnerableAttribute"/>
 	</xs:complexType>
     <xs:complexType name="MannedAttribute">
         <xs:annotation>
@@ -492,7 +493,7 @@
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="template" type="xs:boolean" default="false"/>
 	</xs:complexType>
-	<xs:complexType name="DamageSpec">
+	<xs:complexType name="VulnerableAttribute">
 		<xs:annotation>
 			<xs:documentation>
 				disable = the amount of damage to disable the component
@@ -506,6 +507,7 @@
 		<xs:attribute name="destroy" type="xs:int" />
 		<xs:attribute name="repairRate" type="xs:int" default="0" />
 		<xs:attribute name="efficacyFactor" type="xs:int" default="1" />
+		<xs:attribute name="conflictsWith" type="xs:string" default="InvulnerableAttribute"/>
 	</xs:complexType>
 	<xs:complexType name="ComponentContainerClass">
 		<xs:sequence>

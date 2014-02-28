@@ -1,0 +1,5 @@
+1.0 Ships
+1.1 Ships are top-level containers consisting of six shields, one or more hulls, and zero or more systems.
+1.2 Shields
+1.3 Hulls
+1.4 Systems
