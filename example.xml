@@ -1,4 +1,11 @@
-﻿<drydock xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd" version="1.0">
+﻿<drydock xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd" version="1.0"
+    guid="43bd1efe-7fb4-449f-8e37-9c0aebc269be"
+    name="Sample XML exercising entities defined in drydock.xsd"
+    author="codefool.org"
+    copyright="Copyright (C) 2014 codefool.org. All rights reserved."
+    license="http://www.gnu.org/licenses/lgpl-2.1.html"
+    home="http://github.com/codefool/drydock"
+>
 <!--
 example.xml - Sample XML exercising entities defined in drydock.xsd.
 
@@ -7,14 +14,14 @@ Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/lic
 This project lives at http://github.com/codefool/drydock
 
 -->
-    <ship guid="10000" name="Heavy Cruiser" race="FED" mnemonic="CA" crew="430">
+    <ship guid="65a14e45-99b5-496d-a61c-87d5c42e85ab" name="Heavy Cruiser" race="FED" mnemonic="CA" crew="430">
         <shield facing="A" strength="30" generator="2201"/>
         <shield facing="B" strength="24" generator="2202"/>
         <shield facing="C" strength="24" generator="2203"/>
         <shield facing="D" strength="24" generator="2204"/>
         <shield facing="E" strength="24" generator="2205"/>
         <shield facing="F" strength="24" generator="2206"/>
-	    <hull id="1" name="primary" facing="FAB" hits="12">
+	    <hull id="1" name="primary" facing="FAB" hits="12" split="true">
 	        <section id="11" name="forward" facing="A" capacity="200">
 	           <componentRef id="111" type="Battery"/>
 	           <componentRef id="112" type="Battery"/>
@@ -85,7 +92,7 @@ This project lives at http://github.com/codefool/drydock
 	    </hull>
 	    <!--  
 	    the following defines a system consisting of the two warp nacelles and the warp core.
-	    The efficacy of this system is the average of the efficacies of all the components in
+	    The efficacy of this system is the average of the efficacy of all the components in
 	    the system. 
 	    -->
         <system id="8000" name="WarpDrive">
@@ -106,29 +113,25 @@ This project lives at http://github.com/codefool/drydock
         <systemRef id="8040" sysName="Phaser I" c1="2202" c2="1023" c3="1400"/>
         <systemRef id="8030" sysName="Wave-Motion Gun" c1="3201" c2="2201" c3="3201"/>
     </ship>
-    <component guid="10200" name="Fusion Reactor 1" mnemonic="FR1" size="2">
+    <component guid="a28f3940-7047-4c8d-b597-b0b6e6f7cd3e" name="Fusion Reactor 1" mnemonic="FR1" size="2">
         <powersource rate="10"/>
     </component>
-    <component guid="10210" name="Phaser I" mnemonic="P1" size="10">
+    <component guid="b13ba74e-ddcb-43ff-a26d-8e72c2fc08d3" name="Phaser I" mnemonic="P1" size="10">
         <vulnerable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
-        <weapon damage="5">
-            <charging cost="1" time="1"/>
-        </weapon>
+        <weapon baseDamage="5"/>
         <directfire maxRange="5" entropy="1"/>
     </component>
-    <component guid="10220" name="Wave-Motion Gun" mnemonic="WMG" size="30" maxOccurs="1">
+    <component guid="a43760f1-71ed-4b89-8bdd-fe537388a9ed" name="Wave-Motion Gun" mnemonic="WMG" size="30" maxOccurs="1">
         <vulnerable disable="10" destroy="20" repairRate="1" efficacyFactor="1"/>
-        <weapon damage="5">
-            <charging cost="5" time="5"/>
-        </weapon>
+        <weapon baseDamage="5"/>
         <directfire maxRange="10" entropy="1" cone="A5MB5RMA5RFA5"/>
     </component>
-    <component id="108020" name="WaveMotionGun" template="true">
+    <system id="108020" name="WaveMotionGun">
 	    <componentRef id="$c1" type="Wave-Motion Gun" weight="40"/>
 	    <componentRef id="$c2" type="Fusion Reactor 1" weight="10"/>
 	    <componentRef id="$c3" type="10220" weight="50"/>
-    </component>
-    <component guid="1" name="Phaser I" mnemonic="PH-1" size="1" baseDamage="3" addDamage="3" maxRange="10">
+    </system>
+    <component guid="44a35ee1-89a7-44db-80df-95ce583d96a5" name="Phaser I" mnemonic="PH-1" size="1" baseDamage="3" addDamage="3" maxRange="10">
     
     </component>
 </drydock>

@@ -151,6 +151,7 @@
 		<xs:annotation>
 			<xs:documentation>
 				A hull is a container of sections.
+				split - this hull can be split into a separate chit.
 			</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
@@ -160,6 +161,7 @@
 		<xs:attribute name="name" type="xs:string"/>
 		<xs:attribute name="facing" type="xs:string" use="required"/>
 		<xs:attribute name="hits" type="xs:int" use="required"/>
+		<xs:attribute name="split" type="xs:boolean" default="false"/>
 	</xs:complexType>
 	<xs:complexType name="ShipClass">
 		<xs:annotation>
@@ -184,7 +186,7 @@
 			<xs:element name="systemRef" type="tns:SystemRef" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="buildable" type="tns:BuildableAttribute" minOccurs="0" maxOccurs="1"/>
 		</xs:sequence>
-		<xs:attribute name="guid" type="xs:unsignedLong" use="required"/>
+		<xs:attribute name="guid" type="xs:string" use="required"/>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="mnemonic" type="xs:string" use="required"/>
 		<xs:attribute name="crew" type="xs:int" use="required"/>
@@ -243,7 +245,7 @@
             <xs:element name="shipRestrict" type="xs:string" minOccurs="0" maxOccurs="1"/>
             <xs:element name="launcher" type="tns:LauncherAttribute" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="guid" type="xs:unsignedLong" use="required"/>
+        <xs:attribute name="guid" type="xs:string" use="required"/>
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="mnemonic" type="xs:string" use="required"/>
         <xs:attribute name="size" type="xs:int" use="required"/>
@@ -265,64 +267,6 @@
        <xs:attribute name="cost" type="xs:int" default="1"/>
        <xs:attribute name="size" type="xs:int" default="1"/>
     </xs:complexType>
-	<xs:complexType name="EnergyWeaponClass">
-	   <xs:annotation>
-	       <xs:documentation>
-	       The base class for energy weapons.
-	       charging - specifies the charging metrics for the weapon
-	       baseDamage - base damage - the minimum damage inflicted 
-	       addDamage - number of additional (0..n) damage inflicted. 
-	       duration - the number of impulses the weapon fires.
-	       </xs:documentation>
-	   </xs:annotation>
-	   <xs:complexContent>
-	       <xs:extension base="tns:ComponentClass">
-               <xs:attribute name="baseDamage" type="xs:int" use="required"/>
-               <xs:attribute name="addDamage" type="xs:int" default="0"/>
-               <xs:attribute name="duration" type="xs:int" default="1"/>
-	       </xs:extension>
-	   </xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="DirectFireWeaponClass">
-	   <xs:annotation>
-	       <xs:documentation>
-	       Defines a direct-fire weapon. Such weapons are point-to-point linear beam
-	       with optional cones of effect.
-	       cone - a HexWalker string the defines the hex's that are affected by the
-	              discharge of the weapon.
-	       minRange - the minimum range the weapon can target (default=1)
-	       maxRange - the maximum effective range of the weapon.
-	       entropy - the amount of energy lost per unit distance (constant or percentage).
-	                 Specify constant as number &gt;= 1.0, and percentages as &lt; 1.0, e.g. .45
-	       cone - cone of affect - this is a HexWalker directive string.
-	       </xs:documentation>
-	   </xs:annotation>
-	   <xs:complexContent>
-	       <xs:extension base="tns:EnergyWeaponClass">
-	           <xs:attribute name="minRange" type="xs:int" default="1"/>
-               <xs:attribute name="maxRange" type="xs:int" use="required"/>
-	           <xs:attribute name="entropy" type="xs:int" default="1"/>
-	           <xs:attribute name="cone" type="xs:string"/>
-	       </xs:extension>
-	   </xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="SeekingWeaponClass">
-       <xs:annotation>
-           <xs:documentation>
-           Defines a seeking weapon. Such weapons spawn another game chit which acts
-           independently of its mother chit.
-           </xs:documentation>
-       </xs:annotation>
-       <xs:complexContent>
-           <xs:extension base="tns:EnergyWeaponClass">
-               <xs:attribute name="range" type="xs:int"/>
-               <xs:attribute name="initSpeed" type="xs:int"/>
-               <xs:attribute name="maxSpeed" type="xs:int"/>
-               <xs:attribute name="accelleration" type="xs:int"/>
-               <xs:attribute name="turningClass" type="xs:int"/>
-           </xs:extension>
-       </xs:complexContent>
-	</xs:complexType>
 	<xs:complexType name="FlamableAttribute">
 		<xs:annotation>
 			<xs:documentation>
@@ -538,6 +482,17 @@
            </xs:extension>
        </xs:complexContent>
     </xs:complexType>
+    <xs:complexType name="MissionClass">
+        <xs:annotation>
+            <xs:documentation>
+                Defines a mission type for a ships, both player and non-player. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+        </xs:sequence>
+        <xs:attribute name="guid" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
 	<xs:complexType name="Shield">
 		<xs:annotation>
 			<xs:documentation>
@@ -563,10 +518,15 @@
 			<xs:element name="ship" type="tns:ShipClass" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="component" type="tns:ComponentClass" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="system" type="tns:SystemClass" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="directFireWeapon" type="tns:DirectFireWeaponClass" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="seekingWeapon" type="tns:SeekingWeaponClass" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="mission" type="tns:MissionClass" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
-		<xs:attribute name="version" type="xs:string" />
+		<xs:attribute name="guid" type="xs:string" default="0"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="version" type="xs:string" use="required"/>
+		<xs:attribute name="author" type="xs:string"/>
+		<xs:attribute name="copyright" type="xs:string"/>
+		<xs:attribute name="license" type="xs:string"/>
+		<xs:attribute name="home" type="xs:string"/>
 	</xs:complexType>
 
 	<xs:element name="drydock" type="tns:DryDock" />
