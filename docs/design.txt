@@ -3,3 +3,36 @@
 1.2 Shields
 1.3 Hulls
 1.4 Systems
+
+Templates
+
+The ship definition must specify specific instances of components by id for the system. e.g., a FED phaser
+will always consist of the same components, but for a specific ship class it will be for certain component
+id's specific to that ship class. Rather than require the user to specify the system repeatedly, it would
+be useful to specify a system "template" that would receive the id's of specific components that make up
+the system. e.g.,
+
+	<phaser-I id=<id> fireControl="11234" phaser1="3423" conduit="3323" power="3223"
+	
+	
+<xs:complexType name="phaser-I">
+	<xs:annotation>
+		<xs:documentation>
+			Basic template for a phaser type I system. Requires the following:
+			id - identifies this system from all others in the ship class
+			fireControl - the id of the fire control system
+			phaser1 - the id of the actual phaser-I emmitter.
+			conduit - the id of the power conduit for the phaser.
+			power - the power supply of the phaser
+			auxpower - auxilary power supply (optional)
+			tirtpower - tirtiary power supply (optional)
+		</xs:documentation>
+	</xs:annotation>
+	<xs:attribute name="id" type="xs:string" use="requried"/>
+	<xs:attribute name="fireControl" type="xs:xstring" use="required"/>
+	<xs:attribute name="phaser1" type="xs:string" use="required"/>
+	<xs:attribute name="conduit" type="xs:string" use="required"/>
+	<xs:attribute name="power" type="xs:string" use="requried"/>
+	<xs:attribute name="auxpower" type="xs:string" use="required"/>
+	<xs:attribute name="tirtpower" type="xs:string" use="required"/>
+</xs:complexType> 

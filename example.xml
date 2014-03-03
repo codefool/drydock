@@ -131,7 +131,19 @@ This project lives at http://github.com/codefool/drydock
 	    <componentRef id="$c2" type="Fusion Reactor 1" weight="10"/>
 	    <componentRef id="$c3" type="10220" weight="50"/>
     </system>
-    <component guid="44a35ee1-89a7-44db-80df-95ce583d96a5" name="Phaser I" mnemonic="PH-1" size="1" baseDamage="3" addDamage="3" maxRange="10">
-    
-    </component>
+    <race guid="368c5622-ddf4-43b2-941d-7d3dbf79cd8e" name="Federation" mnemonic="FED" alignment="Lawful-Good">
+        <enemy>ROM</enemy>
+        <enemy>KLI</enemy>
+        <ally>ORG</ally>
+    </race>
+    <race guid="a6a67cf7-9f93-4524-b967-6c1b58b79534" name="Klingon" mnemonic="KLI" alignment="Lawful-Chaotic">
+        <enemy>FED</enemy>
+        <enemy>ROM</enemy>
+        <enemy>ORG</enemy>
+    </race>
+    <race guid="70e5599b-f2a0-4730-8589-01117334dcea" name="Romulan" mnemonic="ROM" alignment="Lawful-Evil">
+        <enemy>FED</enemy>
+        <enemy>KLI</enemy>
+        <enemy>ORG</enemy>
+    </race>
 </drydock>
