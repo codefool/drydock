@@ -579,7 +579,7 @@
             <xs:element name="mission" type="tns:MissionClass" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="race" type="tns:RaceClass" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
-		<xs:attribute name="guid" type="tns:guid" default="0"/>
+		<xs:attribute name="guid" type="tns:guid"/>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="version" type="xs:string" use="required"/>
 		<xs:attribute name="author" type="xs:string"/>
