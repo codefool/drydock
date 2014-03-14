@@ -5,8 +5,11 @@
  *      Author: hesterg
  */
 #include <iostream>
+#include <utility>
 #include <vector>
 #include <string>
+#include <map>
+#include <memory>
 #include <rapidxml.hpp>
 #include <rapidxml_utils.hpp>
 using namespace rapidxml;
@@ -29,6 +32,21 @@ public:
 	{}
 	virtual ~Attribute()
 	{}
+};
+
+class AttributeCollection
+{
+public:
+    AttributeCollection()
+    {}
+    virtual ~AttributeCollection()
+    {}
+    void add( Attribute *atr )
+    {
+        _c.insert( std::make_pair( atr->_type, std::shared_ptr<Attribute>( atr ) ) );
+    }
+private:
+    std::map<Attribute::Type, std::shared_ptr<Attribute>> _c;
 };
 
 class InvulerableAttribute : public Attribute
@@ -60,7 +78,8 @@ class LauncherAttribute : public Attribute
 {
 public:
 	LauncherAttribute( std::string spawnType, int seriesNo, int capacity, bool factory )
-	: Attribute( Launcher ), _spawnType( spawnType ), _seriesNo( seriesNo ), _capacity( capacity ), _factory( factory )
+	: Attribute( Launcher ), _spawnType( spawnType )
+    , _seriesNo( seriesNo ), _capacity( capacity ), _factory( factory )
 	{}
 	virtual ~LauncherAttribute()
 	{}
@@ -91,6 +110,50 @@ private:
 	int	_overTime;
 	int	_overHold;
 	int	_overMaxHold;
+};
+
+class Shield
+{
+private:
+};
+
+class Component
+{
+
+};
+
+class ComponentCollection
+{
+
+};
+
+class Section
+{
+
+
+};
+
+class SectionCollection
+{
+
+};
+
+class System
+{
+
+};
+
+class SystemCollection
+{
+
+};
+
+class Ship : public AttributeCollection
+{
+private:
+    Shield                         _shield[6];
+    std::vector<SectionCollection> _hull;
+    SystemCollection               _system;
 };
 
 /*
