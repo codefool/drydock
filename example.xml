@@ -1,4 +1,6 @@
-﻿<drydock xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd" version="1.0"
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<drydock xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd" version="1.0"
     guid="43bd1efe-7fb4-449f-8e37-9c0aebc269be"
     name="Sample XML exercising entities defined in drydock.xsd"
     author="codefool.org"
@@ -12,9 +14,12 @@ example.xml - Sample XML exercising entities defined in drydock.xsd.
 Distributed under GNU LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/licenses/lgpl-2.1.html)
 
 This project lives at http://github.com/codefool/drydock
-
 -->
+    <!-- FED CA Federation Heavy Cruiser -->
     <ship guid="65a14e45-99b5-496d-a61c-87d5c42e85ab" name="Heavy Cruiser" race="FED" mnemonic="CA" crew="430">
+    	<documentation>
+    	FED CA Federation Heavy Cruiser
+    	</documentation>
         <shield facing="A" strength="30" generator="2201"/>
         <shield facing="B" strength="24" generator="2202"/>
         <shield facing="C" strength="24" generator="2203"/>

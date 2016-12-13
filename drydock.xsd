@@ -146,6 +146,7 @@
 			<xs:element name="componentRef" type="tns:ComponentRef" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="weaponRef" type="tns:WeaponRef" minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="neighbors" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:int" use="required"/>
 		<xs:attribute name="name" type="xs:string" />
@@ -161,6 +162,7 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="section" type="tns:Section" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:int" use="required"/>
 		<xs:attribute name="name" type="xs:string"/>
@@ -190,6 +192,7 @@
 			<xs:element name="system" type="tns:SystemClass" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="systemRef" type="tns:SystemRef" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="buildable" type="tns:BuildableAttribute" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		<xs:attribute name="guid" type="tns:guid" use="required"/>
 		<xs:attribute name="name" type="xs:string" use="required"/>
@@ -198,11 +201,17 @@
 		<xs:attribute name="race" type="tns:Race" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="WeaponAttribute">
+	   <xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
        <xs:attribute name="baseDamage" type="xs:int" use="required"/>
        <xs:attribute name="addDamage" type="xs:int" default="0"/>
        <xs:attribute name="duration" type="xs:int" default="1"/>
 	</xs:complexType>
 	<xs:complexType name="DirectFireAttribute">
+	   <xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
        <xs:attribute name="minRange" type="xs:int" default="1"/>
        <xs:attribute name="maxRange" type="xs:int"/>
        <xs:attribute name="entropy" type="xs:int" default="1"/>
@@ -210,6 +219,9 @@
        <xs:attribute name="cone" type="xs:string"/>
 	</xs:complexType>
 	<xs:complexType name="SeekingWeaponAttribute">
+	   <xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
         <xs:attribute name="maxAge" type="xs:int"/>
         <xs:attribute name="initSpeed" type="xs:int"/>
         <xs:attribute name="maxSpeed" type="xs:int"/>
@@ -225,6 +237,9 @@
 	           relies upon. Useful for specifying alternate linkages.
 	       </xs:documentation>
 	   </xs:annotation>
+	   <xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
 	   <xs:attribute name="compOfType" type="xs:string" use="required"/>
 	   <xs:attribute name="compId" type="xs:string"/>
 	</xs:complexType>
@@ -241,6 +256,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
             <xs:element name="chargable" type="tns:ChargingAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="vulnerable" type="tns:VulnerableAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="flamable" type="tns:FlamableAttribute" minOccurs="0" maxOccurs="1"/>
@@ -274,6 +290,7 @@
            </xs:documentation>
        </xs:annotation>
        <xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
             <xs:element name="flamable" type="tns:FlamableAttribute" minOccurs="0" maxOccurs="1"/>
             <xs:element name="explosive" type="tns:ExplosiveAttribute" minOccurs="0" maxOccurs="1"/>
        </xs:sequence>
@@ -294,6 +311,9 @@
 				cumulate - if the percentage change is cumulative 
 			</xs:documentation>
 		</xs:annotation>
+	   <xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
 		<xs:attribute name="baseDamage" type="xs:int" use="required"/>
         <xs:attribute name="addDamage" type="xs:int" default="0"/>
         <xs:attribute name="duration" type="xs:int" default="1"/>
@@ -302,6 +322,7 @@
 	</xs:complexType>
 	<xs:complexType name="ExplosionDamage">
 	   <xs:sequence>
+		   <xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
 	       <xs:element name="radius" type="xs:int" default="1"/>
 	       <xs:element name="decay" type="xs:int" default="1"/>
 	   </xs:sequence>
@@ -312,6 +333,9 @@
 				Indicates this component is explosive.
 			</xs:documentation>
 		</xs:annotation>
+	    <xs:sequence>
+			<xs:element name="documentation" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
         <xs:attribute name="baseDamage" type="xs:int" use="required"/>
 		<xs:attribute name="addDamage" type="xs:int" default="0"/>
 	</xs:complexType>
