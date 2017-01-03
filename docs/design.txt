@@ -1,3 +1,19 @@
+<chit>
+    <movable>       <!-- has vector, player directed -->
+        <seeking>   <!-- kirok directed (autopilot) -->
+        
+<factory> - generates a specific object type periodically or on-demand
+
+A template is derived from one of the pre-defined types detailed in drydock.xsd that can be instantiated 
+within Kirok, and as such are immutable. The xsd exists solely to validate derived types defined in xml 
+meet the expectations of the Kirok parser. Additional templates for defined types are in shipdef.xml, and 
+are also immutable.
+
+<component>
+	<weapon>
+	    <direct-fire-weapon> <!-- synonym of weapon -->
+	    <seeking-weapon>  <!-- derived from weapon, seeking -->
+
 1.0 Ships
 1.1 Ships are top-level containers consisting of six shields, one or more hulls, and zero or more systems.
 1.2 Shields
