@@ -11,6 +11,8 @@ Flamable - can burn
 Repairable - can be repaired
 Healable - can repair itself
 Explosive - can explode
+Nimble - SFB C11.0
+SmallTarget - SFB E1.7
 
 
 This is the object heirarchy of drydock.
@@ -19,15 +21,31 @@ Object - base Object
    MonitoredObject
        Attribute
    Container
-       Hull (SectionColleciton)
+       Hull (SectionCollection)
            SeperableHull
        Section (SystemCollection)
            SeperableSection
        System
    Component
-       BUildableComponent : Component, Buildable
+       BuildableComponent : Component, Buildable
        Factory - generates instances of a BuildableComponent
        Weapon - offensive damage
            DirectFireWeapon
+               Phaser
+               DisruptorBolt
+               PhotonTorpedoe
+               AntiDrone
+               MCIDS
+               FusionBeams
+               Maulers
+               TractorRepulsorBeam
+               HellBore
+               PlasmaticPulsarDevice
+               WebCaster
+               TholianSnare
+               WebFist
+               WebBreaker
+               ShieldCracker
+               ParticalCannon
            SeekingWeapon
 
