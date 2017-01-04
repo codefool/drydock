@@ -1,0 +1,33 @@
+Attributes are abstract base objects that provide the same function as interfaces in java
+
+Moveable - position and vector (player controlled)
+PowerSource - generates power
+PowerSink - consumes power
+Buildable - can be constructed from resources
+Destructable - can be destroyed
+Indestructable - cannot be destoryed
+Invulnerable - cannot be damaged
+Flamable - can burn
+Repairable - can be repaired
+Healable - can repair itself
+Explosive - can explode
+
+
+This is the object heirarchy of drydock.
+
+Object - base Object
+   MonitoredObject
+       Attribute
+   Container
+       Hull (SectionColleciton)
+           SeperableHull
+       Section (SystemCollection)
+           SeperableSection
+       System
+   Component
+       BUildableComponent : Component, Buildable
+       Factory - generates instances of a BuildableComponent
+       Weapon - offensive damage
+           DirectFireWeapon
+           SeekingWeapon
+
