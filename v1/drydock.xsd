@@ -2,7 +2,7 @@
 <!-- drydock.xsd - XML schema for starship definition Distributed under GNU 
 	LESSER GENERAL PUBLIC LICENSE v2.1 (http://www.gnu.org/licenses/lgpl-2.1.html) 
 	This project lives at http://github.com/codefool/drydock 
-        This file is publically available at http://codefool.org/schemas/drydock.xsd
+        This file is publically available at http://code.codefool.org/schemas/drydock/v1/drydock.xsd
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd"
