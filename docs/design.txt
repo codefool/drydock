@@ -1,3 +1,246 @@
+Something a bit simpler ...
+
+Start with a hull, and the hull has six facings. Each facing contains the components. Neighbors are
+the natural neighbors of the facings (i.e., neighbors of A are F and B and Core.) The Core by 
+definition is unshielded. A neighbor to the Core is unshielded for purposes of internal damage.
+A ship with multiple hulls (that are connected) combine their facing inventories, and split damage.
+
+
+           +----+
+          /      \
+    +----+   A    +----+
+   /      \      /      \
+  +   F    +----+   B    +
+   \      /      \      /
+    +----+  Core  +----+
+   /      \      /      \
+  +   E    +----+   C    +
+   \      /      \      /
+    +----+   D    +----+
+          \      /
+           +----+
+
+What we need to know:
+- what a component is
+- where is it located
+- what is it a part of?
+
+components are atomic parts of a ship's infrastructure
+components are connected together to be a system_name
+a system provides a capability
+a component takes damage which affects the efficiency of a system its part of
+to assess damage, we need to know where the component is
+
+It's easier to visualize components in terms of location, so a ship manifest
+should contain which of its sections contain what components.
+
+components should fit together like puzzle pieces
+
+Need a simple way to link a component to the system(s) it belongs to
+
+power conduit
+data bus
+
+bridge has combat-computer -> data bus -> fire-control-computer -> data bus -> phaser
+
+     bridge
+     +| combat-computer    fire-control  phaser
+     ||    ||              ||            ||
+data +-----+---------------+-------------+-
+power-+-----+---------------+-------------+
+
+
+<component name="electro-plasma-system">
+    <accepts type="warp_plasma"/>
+    <provides type="eps_power"/>
+</component>
+
+<component name="eps-conduit">
+    <accepts "eps_power"/>
+    <provides "eps_power"/>
+</component>
+
+<component type="phaser">
+    <accepts type="eps_power"/>
+</component>
+
+<phaser type="phaser-i"/>
+</phaser>
+
+So, a system must have at least a component that provides, and a component that accepts
+
+Assumption is that if two components in a system are not in the same section, then three
+must be a valid conduit to connect the two. This will take pathfinding.
+
+<system name="phaser-i">
+    <component ref="electro-plasma-system"/>
+    <component ref="phaser-i"/>
+</system>
+
+
+
+ls phaser-I
+100% phaser-I 0123 ph-secton-b
+100% phaser-I 0124
+
+ls 0123
+phaser-I 0123 Loc: ph-section-b Eff: 100%
+power
++ 100% warp-core
++ 100% electro-plasma-system
++ 100% sh-port-eps-conduit
++ 100% ph-port-eps-conduit
++ 100% ph-port-primary-phaser-coupling
+control
++ 100% bridge
++ 100% fire-control computer 
+repair
++ 100% damage-control
+
+100% ph-port-phaser-I
+
+ls bridge
+100% bridge 0001 ph-section-core
+
+ls 0001
+bridge 0001 Loc: ph-section-core Eff:100%
+100% warp-core
+100% electro-plasma-system
+100% sh-central-eps-conduit
+100% ph-central-eps-conduit
+100% 
+
+
+
+
+<drydock>
+    <ship>
+        <hull name="primary" >
+            <section name="a">
+                <battery cnt="2"/>
+                <photon sysref="" arc="FA"/>
+                <photon sysref="" arc="FA"/>
+                <photon sysref="" arc="FA"/>
+                <photon sysref="" arc="FA"/>
+                <phaseri sysref="" arc="FH"/>
+                <phaseri sysref="" arc="FH"/>
+            </section>
+            <section name="b">
+                <lab hits="4"/>
+                <phaseri arc="RF"/>
+                <phaseri arc="R"/>
+            </section>
+            <section name="c">
+                <lab hits="4"/>
+                <phaseri arc="RF"/>
+                <phaseri arc="R"/>
+                <impulse hits="4"/>
+                <battery/>
+            </section>
+            <section name="d">
+                <asw/>
+                <emergencty hits="2"/>
+                <impulse hits="4"/>
+                <battery/>
+            </section>
+            <section name="e">
+                <lab hits="4"/>
+                <phaseri arc="LF"/>
+                <phaseri arc="L"/>
+            </section>
+            <section name="f">
+                <lab hits="4"/>
+                <phaseri arc="LF"/>
+                <phaseri arc="L"/>
+            </section>
+            <section name="core">
+                <sickbay/>
+                <bridge hits="2"/>
+                <auxilary_control hits="2"/>
+                <navigation_computer/>
+                <fire_control_computer/>
+            </section>
+        </hull>
+        <hull name="secondary">
+            <section_a>
+            </section>
+            <section_b>
+                <warp_nacelle sysref="starboard_warp_drive" />
+                <warp_strut sysref="starboard_warp_drive" />
+                <plasma_conduit sysref="starboard_warp_drive"/>
+                <battery/>
+            </section>
+            <section_c>
+            </section>
+            <section_d>
+            </section>
+            <section_e>
+                <warp_nacelle sysref="port_warp_drive" />
+                <warp_strut sysref="port_warp_drive" />
+                <plasma_conduit sysref="port_warp_drive"/>
+                <battery sysref=""/>
+            </section>
+            <section_f>
+            </section>
+            <section_core>
+                <warp_core sysref="WarpDrive"/>
+                <awr sysref=""/>
+                <awr sysref=""/>
+                <power_conduit  sysref=""/>
+                <deuterium_tank sysref="warp_core"/>
+                <anti_deuterium_tank sysref="warp_core"/>
+                <dilitium_crystal_chamber="warp_core"/>
+            </section>
+        </hull>
+        <!--
+            A system consists of at least three components:
+                1. A power source
+                2. A power conduit
+                3. A power sink
+            Additional dependent components may be listed.
+            The weights of all components must sum to 100
+        -->
+        <system name="WarpDrive">
+            <system name="port_warp_drive>
+                <component type="warp_nacelle" weight="20"/>
+                <component type="warp_strut" weight="15"/>
+                <component type="plasma_conduit" weight="5"/>
+            </system>
+            <system name="warp_core" weight="20">
+                <deuterium_tank sysref="WarpDrive"/>
+                <anti_deuterium_tank sysref="WarpDrive"/>
+                <dilitium_crystal_chamber="warp_core"/>
+            </system_name>
+            <system name="starboard_warp_drive>
+                <component type="plasma_conduit" weight="5"/>
+                <component type="warp_strut" weight="15"/>
+                <component type="warp_nacelle" weight="20"/>
+            </system>
+        </system>
+        <system name="Phaser">
+            <component ref="primary.core.fire_control_computer" weight="25"/>
+            <component ref="secondary.core.warp_core" weight="50">
+                <alternative ref="primary.*.impulse"/>
+                <alternative ref="primary.*.fusion_reactor"/>
+                <alternative ref="primary.*.battery"/>
+            </component>
+            <component ref="primary.core.power_conduit" weight="5"/>
+            <component ref="primary.a.phaseri" weight="20"/>
+        </system>
+        <system name="Photon">
+            <component ref="primary.core.fire_control_computer" weight="25"/>
+            <component ref="secondary.core.warp_core" weight="50">
+                <alternative ref="primary.*.impulse"/>
+                <alternative ref="primary.*.fusion_reactor"/>
+                <alternative ref="primary.*.battery"/>
+            </component>
+            <component ref="primary.core.power_conduit" weight="5"/>
+            <component ref="primary.a.photon" weight="20"/>
+        </system>
+    </ship>
+</drydock>
+
+
 <chit>
     <movable>       <!-- has vector, player directed -->
         <seeking>   <!-- kirok directed (autopilot) -->
@@ -34,7 +277,7 @@ the system. e.g.,
 <xs:complexType name="phaser-I">
 	<xs:annotation>
 		<xs:documentation>
-			Basic template for a phaser type I system. Requires the following:
+			Basic template for a phaser type I system.
 			id - identifies this system from all others in the ship class
 			fireControl - the id of the fire control system
 			phaser1 - the id of the actual phaser-I emmitter.
@@ -49,6 +292,6 @@ the system. e.g.,
 	<xs:attribute name="phaser1" type="xs:string" use="required"/>
 	<xs:attribute name="conduit" type="xs:string" use="required"/>
 	<xs:attribute name="power" type="xs:string" use="requried"/>
-	<xs:attribute name="auxpower" type="xs:string" use="required"/>
-	<xs:attribute name="tirtpower" type="xs:string" use="required"/>
+	<xs:attribute name="auxpower" type="xs:string"/>
+	<xs:attribute name="tirtpower" type="xs:string"/>
 </xs:complexType> 

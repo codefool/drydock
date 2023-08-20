@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xml>
-<drydock xmlns="urn:drydock.xsd" xmlns:tns="urn:drydock.xsd" version="1.0"
+<drydock xmlns="https://codefool.org/drydock_v1.xsd" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://codefool.org/drydock_v1.xsd"
+    version="1.0"
     guid="43bd1efe-7fb4-449f-8e37-9c0aebc269be"
     name="Sample XML exercising entities defined in drydock.xsd"
     author="codefool.org"
